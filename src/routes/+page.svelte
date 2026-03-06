@@ -17,8 +17,8 @@
 			import('$lib/data/cards.json'),
 			import('$lib/data/search-index.json')
 		]);
-		const cards: CreditCard[] = cardsModule.default;
-		const searchIndex: SearchIndex = indexModule.default;
+		const cards = cardsModule.default as unknown as CreditCard[];
+		const searchIndex = indexModule.default as unknown as SearchIndex;
 		initSearchEngine(cards, searchIndex.aliases, searchIndex.storeRestrictions);
 		initialized = true;
 	});

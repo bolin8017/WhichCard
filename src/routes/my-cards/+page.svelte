@@ -9,7 +9,7 @@
 
 	onMount(async () => {
 		const cardsModule = await import('$lib/data/cards.json');
-		cards = cardsModule.default;
+		cards = cardsModule.default as unknown as CreditCard[];
 		initialized = true;
 	});
 
