@@ -1,19 +1,23 @@
 id: sinopac-dawho
 name: DAWHO現金回饋信用卡
 bank: 永豐銀行
-network: [visa, mastercard]
+network:
+  - visa
+  - mastercard
 rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/DAWHO.html
 updatedAt: "2026-03-05"
-
 rewards:
-  - stores: ["*"]
+  - stores:
+      - "*"
     storeLabel: 國內全通路
     region: domestic
     rate: 1
     limit: 0
     limitUnit: 元
-    excludes: [保費, 代繳]
+    excludes:
+      - 保費
+      - 代繳
     validFrom: "2026-01-01"
     validUntil: "2026-06-30"
     note: 加碼不含保費代繳
@@ -23,15 +27,49 @@ rewards:
         limit: 400
         limitUnit: 元
         condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
-        tags: [會員等級, 自動扣繳, 電子帳單]
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
       - label: 大戶Plus
         bonus: 4
         limit: 1000
         limitUnit: 元
         condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
-        tags: [會員等級, 自動扣繳, 電子帳單]
-
-  - stores: ["*"]
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
+  - stores:
+      - 悠遊卡自動加值
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 大大等級無優惠，需完成指定任務
+    tiers:
+      - label: 大戶
+        bonus: 3
+        limit: 100
+        limitUnit: 元
+        condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
+      - label: 大戶Plus
+        bonus: 5
+        limit: 500
+        limitUnit: 元
+        condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
+  - stores:
+      - "*"
     storeLabel: 海外全通路
     region: international
     rate: 2
@@ -39,10 +77,23 @@ rewards:
     limitUnit: 元
     validFrom: "2026-01-01"
     validUntil: "2026-06-30"
+    note: 加碼不含保費代繳
     tiers:
       - label: 大戶
         bonus: 2.5
         limit: 400
         limitUnit: 元
         condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
-        tags: [會員等級, 自動扣繳, 電子帳單]
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
+      - label: 大戶Plus
+        bonus: 4
+        limit: 1000
+        limitUnit: 元
+        condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
+        tags:
+          - 會員等級
+          - 自動扣繳
+          - 電子帳單
