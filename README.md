@@ -1,42 +1,67 @@
-# sv
+# 刷哪張 WhichCard
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A pure frontend credit card reward lookup tool. Enter a store name and instantly see the best credit card rewards.
 
-## Creating a project
+## Tech Stack
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **SvelteKit** — Static SPA with adapter-static
+- **Svelte 5** — Runes-based reactivity
+- **TypeScript** — Strict mode
+- **Tailwind CSS v4** — Mobile-first styling
+- **Vitest** — Unit & component tests
+- **Playwright** — E2E tests
+- **Zod** — Data validation
+- **pnpm** — Package manager
 
-```sh
-# create a new project
-npx sv create my-app
+## Getting Started
+
+```bash
+pnpm install
+pnpm build-data   # Build YAML → JSON data pipeline
+pnpm dev           # Start dev server
 ```
 
-To recreate this project with the same configuration:
+## Commands
 
-```sh
-# recreate this project
-npx sv@0.12.5 create --template minimal --types ts --no-install whichcard-v2
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build for production (outputs to `dist/`) |
+| `pnpm build-data` | Compile YAML data to JSON |
+| `pnpm validate-data` | Validate data without building |
+| `pnpm test` | Run unit & component tests |
+| `pnpm test:e2e` | Run Playwright E2E tests |
+| `pnpm check` | Run svelte-check type checking |
+
+## Data Pipeline
+
+Card reward data is stored as individual YAML files in `data/cards/`. A build-time pipeline (`scripts/build-data.ts`) validates and compiles them into optimized JSON for the client.
+
+```
+data/
+  cards/{id}.yaml        # One YAML file per credit card
+  stores/{name}.yaml     # Store restrictions (e.g., network-only)
+  aliases.yaml           # Store name aliases for search
+    ↓ pnpm build-data
+src/lib/data/
+  cards.json             # Compiled card data
+  search-index.json      # Aliases + store restrictions
 ```
 
-## Developing
+## Search Engine
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Four-stage client-side search pipeline:
 
-```sh
-npm run dev
+1. **Retrieval** — Alias resolution (exact → prefix → substring) + StoreIndex lookup
+2. **Hard Filter** — Network restriction, expiry date, exclude categories
+3. **Scoring** — Max reward rate calculation (base + best tier bonus)
+4. **Ranking** — Split into specific matches vs. general (wildcard) matches, sorted by reward rate
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Adding Card Data
 
-## Building
+1. Create `data/cards/{bank}-{card-name}.yaml` (see existing files for format)
+2. Add store aliases to `data/aliases.yaml` if needed
+3. Run `pnpm validate-data` to verify
+4. Run `pnpm build-data` to compile
 
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+See `CLAUDE.md` for detailed data conventions.
