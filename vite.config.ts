@@ -6,6 +6,15 @@ export default defineConfig({
 	plugins: [tailwindcss(), sveltekit()],
 	test: {
 		include: ['tests/**/*.test.ts'],
-		environment: 'jsdom'
+		environment: 'jsdom',
+		setupFiles: ['tests/setup.ts'],
+		server: {
+			deps: {
+				inline: [/svelte/]
+			}
+		}
+	},
+	resolve: {
+		conditions: ['browser']
 	}
 });

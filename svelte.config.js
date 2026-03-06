@@ -7,7 +7,10 @@ const config = {
 			pages: 'dist',
 			assets: 'dist',
 			fallback: 'index.html'
-		})
+		}),
+		alias: {
+			$components: 'src/components'
+		}
 	}
 };
 
