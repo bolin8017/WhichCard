@@ -10,10 +10,13 @@
 
 	$effect(() => {
 		if (showSuggestions && suggestions.length > 0 && searchStore.query && inputEl) {
-			const rect = inputEl.getBoundingClientRect();
-			dropdownTop = rect.bottom + 8;
-			dropdownLeft = rect.left;
-			dropdownWidth = rect.width;
+			// Anchor below the header (not just below the input) so suggestions
+			// never overlap with RegionFilter which sits inside the sticky header.
+			const headerRect = document.querySelector('header')?.getBoundingClientRect();
+			const inputRect = inputEl.getBoundingClientRect();
+			dropdownTop = (headerRect?.bottom ?? inputRect.bottom) + 4;
+			dropdownLeft = inputRect.left;
+			dropdownWidth = inputRect.width;
 		}
 	});
 
