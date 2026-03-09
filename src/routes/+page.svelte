@@ -25,7 +25,6 @@
 
 	const hasQuery = $derived(searchStore.query.trim().length > 0);
 
-	// Sync myCards filter with search store
 	$effect(() => {
 		searchStore.myCardIds = myCardsStore.isFilterActive
 			? myCardsStore.selectedCardIds
@@ -42,56 +41,59 @@
 		const r = results.restriction;
 		if (!r) return undefined;
 		if (r.networks?.length) {
-			const names = r.networks.map((n) => n === 'mastercard' ? 'Mastercard' : n === 'visa' ? 'Visa' : n === 'jcb' ? 'JCB' : n === 'amex' ? 'AMEX' : n);
+			const names = r.networks.map((n) =>
+				n === 'mastercard' ? 'Mastercard'
+				: n === 'visa' ? 'Visa'
+				: n === 'jcb' ? 'JCB'
+				: n === 'amex' ? 'AMEX'
+				: n
+			);
 			return `此通路僅接受 ${names.join(' / ')}`;
 		}
 		return undefined;
 	});
 </script>
 
-{#if !initialized}
-	<div class="flex h-64 items-center justify-center">
-		<p class="text-gray-400">載入中...</p>
-	</div>
-{:else if !hasQuery}
-	<!-- Initial state: centered -->
-	<div class="flex min-h-[60vh] flex-col items-center justify-center px-4">
-		<h1 class="mb-1 text-3xl font-bold text-gray-900">刷哪張</h1>
-		<p class="mb-6 text-sm text-gray-500">找出最適合的信用卡</p>
-
-		<div class="w-full max-w-md">
-			<SearchBar />
-			<div class="mt-4 flex justify-center">
-				<RegionFilter />
+<!-- Permanent header: SearchBar never unmounts -->
+<header class="sticky top-0 z-20 border-b border-gray-100 bg-white">
+	<div class="mx-auto max-w-2xl px-4 py-3">
+		<div class="flex items-center gap-3">
+			<span class="shrink-0 text-lg font-bold tracking-tight text-gray-950">刷哪張</span>
+			<div class="min-w-0 flex-1">
+				<SearchBar />
 			</div>
 		</div>
-
-		<div class="mt-8 flex flex-wrap justify-center gap-2">
-			{#each popularSearches as term}
-				<button
-					type="button"
-					onclick={() => searchFor(term)}
-					class="rounded-full border border-gray-200 px-3.5 py-1.5 text-sm text-gray-600 transition-colors hover:border-gray-400 hover:text-gray-900"
-				>
-					{term}
-				</button>
-			{/each}
+		<div class="mt-2">
+			<RegionFilter />
 		</div>
 	</div>
-{:else}
-	<!-- Search state: results -->
-	<div class="px-4">
-		<div class="sticky top-0 z-20 bg-white pb-3 pt-4">
-			<SearchBar />
-			<div class="mt-3">
-				<RegionFilter />
-			</div>
-			<div class="mt-2">
-				<MyCardsToggle />
+</header>
+
+<!-- Content area: switches state without touching SearchBar -->
+<main class="mx-auto max-w-2xl px-4">
+	{#if !initialized}
+		<div class="flex h-48 items-center justify-center">
+			<p class="text-gray-400">載入中...</p>
+		</div>
+	{:else if !hasQuery}
+		<div class="pt-8">
+			<p class="mb-3 text-sm text-gray-400">熱門搜尋</p>
+			<div class="flex flex-wrap gap-2">
+				{#each popularSearches as term}
+					<button
+						type="button"
+						onclick={() => searchFor(term)}
+						class="rounded-full border border-gray-200 px-3.5 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-50"
+					>
+						{term}
+					</button>
+				{/each}
 			</div>
 		</div>
+	{:else}
+		<div class="space-y-6 pb-8 pt-4">
+			<MyCardsToggle />
 
-		<div class="space-y-6 pb-8">
 			{#if results.specificMatches.length > 0}
 				<ResultSection
 					title="{results.matchedStores[0]} 指定回饋"
@@ -124,5 +126,5 @@
 				</div>
 			{/if}
 		</div>
-	</div>
-{/if}
+	{/if}
+</main>
