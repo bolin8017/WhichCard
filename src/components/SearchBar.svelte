@@ -4,6 +4,18 @@
 	let inputEl: HTMLInputElement | undefined = $state();
 	let showSuggestions = $state(false);
 	let highlightedIndex = $state(-1);
+	let dropdownTop = $state(0);
+	let dropdownLeft = $state(0);
+	let dropdownWidth = $state(0);
+
+	$effect(() => {
+		if (showSuggestions && suggestions.length > 0 && searchStore.query && inputEl) {
+			const rect = inputEl.getBoundingClientRect();
+			dropdownTop = rect.bottom + 8;
+			dropdownLeft = rect.left;
+			dropdownWidth = rect.width;
+		}
+	});
 
 	const suggestions = $derived(searchStore.suggestions);
 
@@ -97,7 +109,8 @@
 	{#if showSuggestions && suggestions.length > 0 && searchStore.query}
 		<ul
 			id="search-suggestions"
-			class="absolute top-full z-10 mt-2 w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg"
+			style="top: {dropdownTop}px; left: {dropdownLeft}px; width: {dropdownWidth}px;"
+			class="fixed z-50 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg"
 			role="listbox"
 		>
 			{#each suggestions as suggestion, i}
