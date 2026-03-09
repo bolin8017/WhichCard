@@ -4,7 +4,7 @@ export type CardNetwork = (typeof CARD_NETWORKS)[number];
 export const REWARD_TYPES = ['現金回饋', '點數回饋'] as const;
 export type RewardType = (typeof REWARD_TYPES)[number];
 
-export const REGIONS = ['domestic', 'international', 'japan', 'korea', 'thailand'] as const;
+export const REGIONS = ['domestic', 'international', 'japan'] as const;
 export type Region = (typeof REGIONS)[number];
 
 export const LIMIT_UNITS = ['元', '點'] as const;

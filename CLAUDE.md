@@ -134,7 +134,8 @@ tests/
 ### 通路限制（`data/stores/{name}.yaml`）
 
 - 用於限制特定通路只接受某些卡組織/銀行/卡片
-- 例如好市多僅接受 Mastercard
+- 可透過 `networks`、`banks`、`cards` 三個欄位組合限制
+- 例如好市多僅接受富邦 Costco 聯名卡（`cards: [fubon-costco]`）
 
 ## 新增信用卡資料規範
 
@@ -161,7 +162,7 @@ tests/
 
 - 一張卡的不同通路/地區拆成獨立的 reward 物件
 - `stores: ["*"]` 代表全通路，此時必須提供 `storeLabel`（如「國內全通路」）
-- `region` 必須明確區分：`domestic` / `international` / `japan` / `korea` / `thailand`
+- `region` 必須明確區分：`domestic` / `international` / `japan`
 - 同一通路 + 同一地區不應出現重複的 reward 規則
 - `rate: 0` 允許（如悠遊卡自動加值無基本回饋，僅有 tier bonus）
 - `limit: 0` 代表無上限，非留空
