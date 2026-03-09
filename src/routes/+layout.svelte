@@ -1,11 +1,16 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
-
+	import '../app.css';
 	let { children } = $props();
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<div class="mx-auto min-h-screen max-w-[480px] font-sans">
+	<nav class="flex items-center justify-end px-4 py-2">
+		<a href="/my-cards" class="text-sm text-gray-500 hover:text-gray-700">
+			我的卡片
+		</a>
+	</nav>
 
-{@render children()}
+	<main>
+		{@render children()}
+	</main>
+</div>

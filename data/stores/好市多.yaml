@@ -1,0 +1,4 @@
+name: 好市多
+restrictions:
+  networks: [mastercard]
+note: 實體門市僅接受 Mastercard

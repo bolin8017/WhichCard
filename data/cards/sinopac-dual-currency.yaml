@@ -1,0 +1,117 @@
+id: sinopac-dual-currency
+name: 幣倍卡
+bank: 永豐銀行
+network:
+  - visa
+  - mastercard
+rewardType: 現金回饋
+sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/dual-currency-card.html
+updatedAt: "2026-03-05"
+note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶
+rewards:
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    excludes:
+      - 保費
+      - 代繳
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 不含分期交易、特定行銷專案保費
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 不含分期交易、預借現金、賭場交易、爭議款、帳務調整、各項手續費
+    tiers:
+      - label: 一般用戶
+        bonus: 4
+        limit: 300
+        limitUnit: 元
+        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單（限國外實體消費，不含百貨商場內商店、第三方支付）
+        tags:
+          - 自動扣繳
+          - 電子帳單
+          - 指定通路
+      - label: 大戶/大戶Plus
+        bonus: 4
+        limit: 800
+        limitUnit: 元
+        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬（限國外實體消費，不含百貨商場內商店、第三方支付）
+        tags:
+          - 自動扣繳
+          - 電子帳單
+          - 會員等級
+          - 指定通路
+  - stores:
+      - 保費
+    region: domestic
+    rate: 1.2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: MCC 6300（壽險+產險），不含特定行銷專案保費，不含分期保費
+  - stores:
+      - SUICA儲值
+      - PASMO儲值
+      - ICOCA儲值
+      - 大國藥妝
+      - Sugi藥妝
+      - Rakuten
+      - Mercari
+      - Amazon
+      - iHerb
+      - Selfridge
+      - eBay
+      - 淘寶
+      - Gmarket
+      - Olive Young
+      - 航空公司
+      - 旅行社
+      - Booking.com
+      - Agoda
+      - Hotels
+      - Expedia
+      - Trip.com
+      - Airbnb
+      - Klook
+      - KKDAY
+      - Trivago
+      - AsiaYo
+      - 歐特儀松山機場停車
+    storeLabel: 精選通路（網購/旅遊）
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 不含百貨商場內商店、第三方支付平台交易
+    tiers:
+      - label: 一般用戶
+        bonus: 4
+        limit: 300
+        limitUnit: 元
+        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單
+        tags:
+          - 自動扣繳
+          - 電子帳單
+      - label: 大戶/大戶Plus
+        bonus: 4
+        limit: 800
+        limitUnit: 元
+        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬
+        tags:
+          - 自動扣繳
+          - 電子帳單
+          - 會員等級
