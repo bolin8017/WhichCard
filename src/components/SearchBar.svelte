@@ -71,6 +71,7 @@
 		type="text"
 		role="combobox"
 		aria-expanded={showSuggestions && suggestions.length > 0}
+		aria-controls="search-suggestions"
 		aria-autocomplete="list"
 		value={searchStore.query}
 		oninput={handleInput}
@@ -95,6 +96,7 @@
 
 	{#if showSuggestions && suggestions.length > 0 && searchStore.query}
 		<ul
+			id="search-suggestions"
 			class="absolute top-full z-10 mt-2 w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg"
 			role="listbox"
 		>
