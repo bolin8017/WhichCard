@@ -1,0 +1,183 @@
+id: fubon-costco
+name: Costco聯名卡
+bank: 富邦
+network: [mastercard]
+rewardType: 現金回饋
+sourceUrl: https://www.fubon.com/banking/Personal/credit_card/all_card/Costco/costco.htm
+updatedAt: "2026-03-07"
+note: 回饋為好多金，可折抵好市多消費或會費，每年3/31未使用歸零
+
+rewards:
+  # 好市多線上購物 3%
+  - stores: [好市多線上購物]
+    region: domestic
+    rate: 3
+    limit: 0
+    limitUnit: 元
+
+  # 好市多門市 2%
+  - stores: [好市多]
+    region: domestic
+    rate: 2
+    limit: 0
+    limitUnit: 元
+
+  # 好市多自助加油站 2% + 加碼1%
+  - stores: [好市多自助加油站]
+    region: domestic
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2023-08-08"
+    validUntil: "2027-12-31"
+    tiers:
+      - label: 加油站加碼
+        bonus: 1
+        limit: 200
+        limitUnit: 元
+        condition: 好市多自助加油站消費自動加碼，每期帳單上限200元
+        tags: [指定通路, 限期]
+
+  # UberEats好市多專區 1% + 加碼1%
+  - stores: [UberEats好市多專區]
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    tiers:
+      - label: UberEats加碼
+        bonus: 1
+        limit: 0
+        limitUnit: 元
+        condition: UberEats好市多專區消費加碼，第三方支付不適用
+        tags: [指定通路, 限期]
+
+  # 高鐵/臺鐵 1% + 加碼
+  - stores: [台灣高鐵, 台鐵]
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 世界卡加碼上限550元/月，鈦金/鈦商卡450元/月
+    tiers:
+      - label: 前月消費滿6,000
+        bonus: 1
+        limit: 450
+        limitUnit: 元
+        condition: 需登錄，前月店外消費滿6,000元（鈦金/鈦商卡），世界卡加碼2%
+        tags: [需登錄, 最低消費, 限期]
+      - label: 前月消費滿12,000
+        bonus: 2
+        limit: 450
+        limitUnit: 元
+        condition: 需登錄，前月店外消費滿12,000元（鈦金/鈦商卡），世界卡加碼3%
+        tags: [需登錄, 最低消費, 限期]
+      - label: 自動扣繳加碼
+        bonus: 1
+        limit: 450
+        limitUnit: 元
+        condition: 使用台北富邦銀行帳戶自動扣繳卡費，可額外加碼
+        tags: [自動扣繳, 限期]
+
+  # 精選海外旅遊 - 國外實體商店 1% + 加碼4%
+  - stores: ["*"]
+    storeLabel: 國外實體商店
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    note: 限國外實體商店，交易地點非台灣且幣別非新臺幣
+    tiers:
+      - label: 海外實體加碼
+        bonus: 4
+        limit: 600
+        limitUnit: 元
+        condition: 需每月至Mastercard官網登錄，每月限5萬名，正附卡合併計算上限
+        tags: [需登錄, 限期]
+
+  # 精選海外旅遊 - 航空公司 1% + 加碼2%
+  - stores: [航空公司]
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    tiers:
+      - label: 海外航空加碼
+        bonus: 2
+        limit: 600
+        limitUnit: 元
+        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        tags: [需登錄, 限期]
+
+  # 精選海外旅遊 - 旅行社 1% + 加碼2%
+  - stores: [旅行社]
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    tiers:
+      - label: 海外旅行社加碼
+        bonus: 2
+        limit: 600
+        limitUnit: 元
+        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        tags: [需登錄, 限期]
+
+  # 精選海外旅遊 - 訂房平台 1% + 加碼2%
+  - stores: [Booking.com, Agoda, Trip.com, Hotels, Expedia]
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    tiers:
+      - label: 海外訂房加碼
+        bonus: 2
+        limit: 600
+        limitUnit: 元
+        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        tags: [需登錄, 限期]
+
+  # 精選海外旅遊 - 免稅店 1% + 加碼2%
+  - stores: [采盟免稅店, 昇恆昌免稅店]
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-06-30"
+    tiers:
+      - label: 免稅店加碼
+        bonus: 2
+        limit: 600
+        limitUnit: 元
+        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        tags: [需登錄, 限期]
+
+  # 國內全通路 1%
+  - stores: ["*"]
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    excludes: [保費, 代繳]
+
+  # 海外全通路 1%
+  - stores: ["*"]
+    storeLabel: 海外全通路
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元

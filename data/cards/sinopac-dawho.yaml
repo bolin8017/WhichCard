@@ -3,10 +3,10 @@ name: DAWHO現金回饋信用卡
 bank: 永豐銀行
 network:
   - visa
-  - mastercard
 rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/DAWHO.html
-updatedAt: "2026-03-05"
+updatedAt: "2026-03-07"
+note: 分期交易不享回饋；回饋金存入永豐DAWHO數位存款帳戶
 rewards:
   - stores:
       - "*"
@@ -77,7 +77,7 @@ rewards:
     limitUnit: 元
     validFrom: "2026-01-01"
     validUntil: "2026-06-30"
-    note: 加碼不含保費代繳
+    note: 不含結匯手續費、DCC、預借現金、賭場交易等
     tiers:
       - label: 大戶
         bonus: 2.5
