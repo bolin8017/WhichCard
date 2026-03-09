@@ -16,8 +16,6 @@ describe('RegionFilter', () => {
 		expect(screen.getByText('國內')).toBeInTheDocument();
 		expect(screen.getByText('國外')).toBeInTheDocument();
 		expect(screen.getByText('日本')).toBeInTheDocument();
-		expect(screen.getByText('韓國')).toBeInTheDocument();
-		expect(screen.getByText('泰國')).toBeInTheDocument();
 	});
 
 	it('國內 is selected by default', () => {

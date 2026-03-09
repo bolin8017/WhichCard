@@ -5,9 +5,7 @@
 	const regions: { value: Region; label: string }[] = [
 		{ value: 'domestic', label: '國內' },
 		{ value: 'international', label: '國外' },
-		{ value: 'japan', label: '日本' },
-		{ value: 'korea', label: '韓國' },
-		{ value: 'thailand', label: '泰國' }
+		{ value: 'japan', label: '日本' }
 	];
 </script>
 

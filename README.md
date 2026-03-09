@@ -40,7 +40,7 @@ Card reward data is stored as individual YAML files in `data/cards/`. A build-ti
 ```
 data/
   cards/{id}.yaml        # One YAML file per credit card
-  stores/{name}.yaml     # Store restrictions (e.g., network-only)
+  stores/{name}.yaml     # Store restrictions (e.g., card/network/bank limits)
   aliases.yaml           # Store name aliases for search
     ↓ pnpm build-data
 src/lib/data/

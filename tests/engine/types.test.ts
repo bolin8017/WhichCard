@@ -15,9 +15,7 @@ describe('type constants', () => {
 		expect(REGIONS).toContain('domestic');
 		expect(REGIONS).toContain('international');
 		expect(REGIONS).toContain('japan');
-		expect(REGIONS).toContain('korea');
-		expect(REGIONS).toContain('thailand');
-		expect(REGIONS).toHaveLength(5);
+		expect(REGIONS).toHaveLength(3);
 	});
 
 	it('has all expected reward types', () => {
