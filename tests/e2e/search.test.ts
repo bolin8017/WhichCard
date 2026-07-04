@@ -65,12 +65,15 @@ test.describe('Range display and category exclusion', () => {
 		await expect(page.getByText('CUBE卡')).toHaveCount(0);
 	});
 
-	test('category exclusion is per-card (國泰人壽 → 保費)', async ({ page }) => {
+	test('category rules are per-card (國泰人壽 → 保費)', async ({ page }) => {
 		await page.goto('/');
 		await page.getByPlaceholder('輸入商家或通路名稱...').fill('國泰人壽');
-		// DAWHO excludes 保費 → hidden; CUBE does not exclude 保費 → visible at base rate
+		// 幣倍卡 1.2% + DAWHO 1% (dedicated premium rules) and CUBE (童樂匯) surface;
+		// fubon-costco excludes 保費 with no dedicated rule → hidden
+		await expect(page.getByText('幣倍卡')).toBeVisible();
+		await expect(page.getByText('DAWHO現金回饋信用卡')).toBeVisible();
 		await expect(page.getByText('CUBE卡')).toBeVisible();
-		await expect(page.getByText('DAWHO現金回饋信用卡')).toHaveCount(0);
+		await expect(page.getByText('Costco聯名卡')).toHaveCount(0);
 	});
 });
 

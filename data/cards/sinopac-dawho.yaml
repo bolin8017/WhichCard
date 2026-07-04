@@ -81,6 +81,20 @@ rewards:
           - 會員等級
           - 自動扣繳
           - 電子帳單
+  # 保費：依永豐一般消費定義，僅排除「富邦人壽(含原ING安泰)、三商美邦人壽、特定行銷專案」保費，
+  # 其餘保險公司保費屬一般消費 → 享基本1%；DAWHO活動辦法:「(任務加碼)不含保費代繳金額」→ 加碼不適用
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
+  - stores:
+      - 保費
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    maxTotalRate: 1
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 僅基本1%，大戶任務加碼不適用；富邦人壽（含原ING安泰）、三商美邦人壽及特定行銷專案保費無回饋
+
   # 官網:「國外消費(限外幣)2%」「國外最高6%現金回饋」
   - stores:
       - "*"
