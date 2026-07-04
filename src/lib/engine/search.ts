@@ -3,7 +3,7 @@ import { buildStoreIndex, buildPrefixIndex, type StoreIndex, type PrefixIndex } 
 import { resolveAlias } from './alias';
 import { buildCategoryIndex, expandStores } from './category';
 import { isCardAccepted, isRuleActive, isExcluded } from './filter';
-import { computeMaxReward, getRuleMaxReward } from './scoring';
+import { combineRateRanges, getRuleRateRange, type RateRange } from './scoring';
 
 export interface SearchParams {
 	query: string;
@@ -17,7 +17,7 @@ export interface SearchResult {
 	card: CreditCard;
 	matchedRule: RewardRule;
 	baseRule?: RewardRule;
-	maxReward: number;
+	rateRange: RateRange;
 	isSpecificMatch: boolean;
 	matchKind: MatchKind;
 }
@@ -83,13 +83,16 @@ export function createSearchEngine(
 					// Find this card's wildcard rule for same region as baseRule
 					const baseRule = findWildcardRule(card, region, expanded);
 
-					const maxReward = computeMaxReward(rule, baseRule);
+					const rateRange = combineRateRanges(
+						getRuleRateRange(rule),
+						baseRule ? getRuleRateRange(baseRule) : undefined
+					);
 
 					const existing = specificByCard.get(card.id);
 					const better =
 						!existing ||
-						maxReward > existing.maxReward ||
-						(maxReward === existing.maxReward &&
+						rateRange.max > existing.rateRange.max ||
+						(rateRange.max === existing.rateRange.max &&
 							kind === 'store' &&
 							existing.matchKind === 'category');
 					if (better) {
@@ -97,7 +100,7 @@ export function createSearchEngine(
 							card,
 							matchedRule: rule,
 							baseRule,
-							maxReward,
+							rateRange,
 							isSpecificMatch: true,
 							matchKind: kind
 						});
@@ -114,14 +117,14 @@ export function createSearchEngine(
 				if (!passesFilters(card, rule, expanded, storeName, region, restrictions, myCardIds))
 					continue;
 
-				const maxReward = getRuleMaxReward(rule);
+				const rateRange = getRuleRateRange(rule);
 
 				const existing = generalByCard.get(card.id);
-				if (!existing || maxReward > existing.maxReward) {
+				if (!existing || rateRange.max > existing.rateRange.max) {
 					generalByCard.set(card.id, {
 						card,
 						matchedRule: rule,
-						maxReward,
+						rateRange,
 						isSpecificMatch: false,
 						matchKind: 'wildcard'
 					});
@@ -129,13 +132,15 @@ export function createSearchEngine(
 			}
 		}
 
-		// Sort by maxReward descending
-		const specificMatches = [...specificByCard.values()].sort(
-			(a, b) => b.maxReward - a.maxReward
-		);
-		const generalMatches = [...generalByCard.values()].sort(
-			(a, b) => b.maxReward - a.maxReward
-		);
+		// Sort: ceiling desc, exact-store before category, floor desc
+		const kindRank: Record<MatchKind, number> = { store: 0, category: 1, wildcard: 2 };
+		const compareResults = (a: SearchResult, b: SearchResult): number =>
+			b.rateRange.max - a.rateRange.max ||
+			kindRank[a.matchKind] - kindRank[b.matchKind] ||
+			b.rateRange.min - a.rateRange.min;
+
+		const specificMatches = [...specificByCard.values()].sort(compareResults);
+		const generalMatches = [...generalByCard.values()].sort(compareResults);
 
 		return { specificMatches, generalMatches, matchedStores, restriction };
 	}

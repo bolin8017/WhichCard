@@ -188,7 +188,7 @@ describe('searchCards', () => {
 		const results = engine.search({ query: 'momo', region: 'domestic' });
 		const ctbc = results.specificMatches.find((r) => r.card.id === 'ctbc-line-pay');
 		expect(ctbc).toBeDefined();
-		expect(ctbc!.maxReward).toBe(5); // rate 3 + tier bonus 2
+		expect(ctbc!.rateRange).toEqual({ min: 3, max: 5 }); // rate 3, +tier bonus 2
 	});
 
 	it('search momo: other cards in general matches via wildcard', () => {
@@ -215,11 +215,11 @@ describe('searchCards', () => {
 		expect(allCards.every((r) => r.card.id === 'ctbc-line-pay')).toBe(true);
 	});
 
-	it('results sorted by maxReward descending', () => {
+	it('results sorted by rate ceiling descending', () => {
 		const results = engine.search({ query: 'momo', region: 'domestic' });
 		for (const section of [results.specificMatches, results.generalMatches]) {
 			for (let i = 1; i < section.length; i++) {
-				expect(section[i - 1].maxReward).toBeGreaterThanOrEqual(section[i].maxReward);
+				expect(section[i - 1].rateRange.max).toBeGreaterThanOrEqual(section[i].rateRange.max);
 			}
 		}
 	});

@@ -48,7 +48,13 @@
 
 	<!-- Row 2: Max Reward Rate -->
 	<div class="mt-2 flex items-baseline gap-1.5">
-		<span class="text-3xl font-bold text-blue-600">{formatRate(result.maxReward)}%</span>
+		<span class="text-3xl font-bold text-blue-600">
+			{#if result.rateRange.max > result.rateRange.min}
+				{formatRate(result.rateRange.min)}% ~ {formatRate(result.rateRange.max)}%
+			{:else}
+				{formatRate(result.rateRange.max)}%
+			{/if}
+		</span>
 		<span class="text-sm text-gray-500">{result.card.rewardType}</span>
 	</div>
 

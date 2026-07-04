@@ -32,7 +32,7 @@ const makeResult = (overrides: Partial<SearchResult> = {}): SearchResult => ({
 			}
 		]
 	},
-	maxReward: 7,
+	rateRange: { min: 5, max: 7 },
 	isSpecificMatch: true,
 	matchKind: 'store',
 	...overrides
@@ -45,8 +45,15 @@ describe('CardResult', () => {
 		expect(screen.getByText('Test Bank')).toBeInTheDocument();
 	});
 
-	it('displays max reward rate', () => {
+	it('displays reward range when floor differs from ceiling', () => {
 		render(CardResult, { props: { result: makeResult() } });
+		expect(screen.getByText('5% ~ 7%')).toBeInTheDocument();
+	});
+
+	it('displays single rate when floor equals ceiling', () => {
+		render(CardResult, {
+			props: { result: makeResult({ rateRange: { min: 7, max: 7 } }) }
+		});
 		expect(screen.getByText('7%')).toBeInTheDocument();
 	});
 

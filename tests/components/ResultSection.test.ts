@@ -21,7 +21,7 @@ const makeResult = (id: string, maxReward: number): SearchResult => ({
 		limit: 0,
 		limitUnit: '元'
 	},
-	maxReward,
+	rateRange: { min: maxReward, max: maxReward },
 	isSpecificMatch: false,
 	matchKind: 'wildcard'
 });
