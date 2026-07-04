@@ -1,7 +1,7 @@
 # WhichCard v2 Redesign — Display-First Rules + Automated Data Pipeline
 
 Date: 2026-07-04
-Status: Draft — pending review
+Status: Approved
 
 ## Problem
 
