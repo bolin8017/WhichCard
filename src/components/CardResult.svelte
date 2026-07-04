@@ -55,7 +55,9 @@
 				{formatRate(result.rateRange.max)}%
 			{/if}
 		</span>
-		<span class="text-sm text-gray-500">{result.card.rewardType}</span>
+		<span class="text-sm text-gray-500">
+			{result.card.rewardType}{#if result.card.pointsName}（{result.card.pointsName}）{/if}
+		</span>
 	</div>
 
 	<!-- Row 3: Reward Breakdown -->
@@ -86,7 +88,7 @@
 
 		{#if showTiers}
 			<div class="mt-1.5 space-y-1.5 rounded bg-gray-50 p-2.5 text-sm">
-				{#each result.matchedRule.tiers ?? [] as tier}
+				{#each [...(result.matchedRule.tiers ?? []), ...(result.baseRule?.tiers ?? [])] as tier}
 					<div>
 						<span class="font-medium">{tier.label} +{formatRate(tier.bonus)}%</span>
 						{#if tier.limit > 0}
@@ -95,17 +97,13 @@
 							</span>
 						{/if}
 						<div class="text-xs text-gray-500">{tier.condition}</div>
-					</div>
-				{/each}
-				{#each result.baseRule?.tiers ?? [] as tier}
-					<div>
-						<span class="font-medium">{tier.label} +{formatRate(tier.bonus)}%</span>
-						{#if tier.limit > 0}
-							<span class="text-gray-500">
-								(上限 {tier.limit.toLocaleString()}{tier.limitUnit}/月)
-							</span>
+						{#if tier.tags?.length}
+							<div class="mt-0.5 flex flex-wrap gap-1">
+								{#each tier.tags as tag}
+									<span class="rounded bg-blue-50 px-1.5 py-0.5 text-xs text-blue-600">{tag}</span>
+								{/each}
+							</div>
 						{/if}
-						<div class="text-xs text-gray-500">{tier.condition}</div>
 					</div>
 				{/each}
 			</div>
