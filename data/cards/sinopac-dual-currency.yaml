@@ -6,9 +6,11 @@ network:
   - mastercard
 rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/dual-currency-card.html
-updatedAt: "2026-03-05"
-note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶
+updatedAt: "2026-07-04"
+# 官網:「新申辦享最高8%現金回饋」= 2%基本+4%精選+2%新申辦行動支付；新申辦2%屬新戶向活動，依政策不收錄
+note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶；新戶行動支付加碼活動未收錄
 rewards:
+  # 官網:「國內一般消費1%現金回饋無上限（2026/7/1~12/31）」
   - stores:
       - "*"
     storeLabel: 國內全通路
@@ -19,9 +21,11 @@ rewards:
     excludes:
       - 保費
       - 代繳
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
     note: 不含分期交易、特定行銷專案保費
+  # 官網:「海外基本2%現金回饋無上限」「精選通路加碼4%：自動扣繳+電子帳單，且前月往來資產月均≥10萬或大戶等級，上限800元/帳單週期」
+  # TODO-REVIEW: 前期曾有「一般用戶」300元上限檔位，本期頁面未見，需確認是否取消
   - stores:
       - "*"
     storeLabel: 海外全通路
@@ -29,38 +33,32 @@ rewards:
     rate: 2
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 不含分期交易、預借現金、賭場交易、爭議款、帳務調整、各項手續費
+    maxTotalRate: 6
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 不含分期、預借現金、賭場交易、各項手續費；加碼限國外實體消費（不含百貨商場內商店、第三方支付）
     tiers:
-      - label: 一般用戶
-        bonus: 4
-        limit: 300
-        limitUnit: 元
-        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單（限國外實體消費，不含百貨商場內商店、第三方支付）
-        tags:
-          - 自動扣繳
-          - 電子帳單
-          - 指定通路
-      - label: 大戶/大戶Plus
+      - label: 海外實體加碼
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬（限國外實體消費，不含百貨商場內商店、第三方支付）
+        condition: 設定永豐帳戶自動扣繳＋電子/行動帳單，且前月往來資產月均≥10萬或大戶/大戶Plus等級
         tags:
           - 自動扣繳
           - 電子帳單
           - 會員等級
-          - 指定通路
+  # 官網:「保費1.2%現金回饋無上限（MCC 6300，壽險+產險）（2026/7/1~12/31）」
   - stores:
       - 保費
     region: domestic
     rate: 1.2
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: MCC 6300（壽險+產險），不含特定行銷專案保費，不含分期保費
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: MCC 6300（壽險+產險），不含特定行銷專案保費、分期保費
+  # 官網:「精選通路（日本三大交通卡儲值、大國藥妝、Rakuten、Amazon、Booking.com、Agoda、Hotels、Airbnb、Klook、KKDAY等）加碼4%」
+  # TODO-REVIEW: 官網摘要以「等」帶過，本清單沿用前期完整清單，需以本期活動辦法逐一核對
   - stores:
       - SUICA儲值
       - PASMO儲值
@@ -94,23 +92,16 @@ rewards:
     rate: 1
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
     note: 不含百貨商場內商店、第三方支付平台交易
     tiers:
-      - label: 一般用戶
-        bonus: 4
-        limit: 300
-        limitUnit: 元
-        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單
-        tags:
-          - 自動扣繳
-          - 電子帳單
-      - label: 大戶/大戶Plus
+      - label: 精選通路加碼
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬
+        condition: 設定永豐帳戶自動扣繳＋電子/行動帳單，且前月往來資產月均≥10萬或大戶/大戶Plus等級
         tags:
           - 自動扣繳
           - 電子帳單
