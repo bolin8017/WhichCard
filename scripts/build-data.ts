@@ -136,6 +136,16 @@ function crossValidate(
 		restrictionMap.set(store.name, store.restrictions);
 	}
 
+	// Restriction card ids must reference existing cards, or the store
+	// silently rejects every card at search time
+	for (const store of stores) {
+		for (const cardId of store.restrictions.cards ?? []) {
+			if (!ids.has(cardId)) {
+				fatal(`stores/${store.name}: restriction card "${cardId}" does not match any card id`);
+			}
+		}
+	}
+
 	const DAY_MS = 86_400_000;
 	const todayStr = new Date().toISOString().slice(0, 10);
 	const soonStr = new Date(Date.now() + 30 * DAY_MS).toISOString().slice(0, 10);
