@@ -50,7 +50,8 @@ src/
   components/            # UI 元件（PascalCase）
   routes/                # SvelteKit 頁面路由
 tests/
-  engine/                # 搜尋引擎單元測試
+  engine/                # 搜尋引擎單元測試（假資料）
+  data/                  # 真實建置資料的 golden 情境測試 + 資料不變量測試
   components/            # 元件測試
   e2e/                   # Playwright E2E 測試
 ```
@@ -222,6 +223,11 @@ tests/
 
 - 搜尋引擎（`src/lib/engine/`）需完整單元測試
 - 新增元件需有基本渲染測試 + 主要互動測試
+- `tests/data/` 用真實建置後 JSON 跑引擎：golden 情境測試（斷言使用者
+  查詢的預期結果）＋資料不變量測試（schema/build-data 沒擋的產品級規則）
+- 資料變更（新卡、規則調整、規則過期刪除）必須同步更新受影響的 golden
+  斷言，兩者在同一個 commit；golden 因規則過期變紅是預期的保鮮絆線
+- 網頁 E2E 只驗 UI 接線，維持薄層；逐卡逐通路的正確性由 golden 測試負責
 - PR 必須通過 CI（build-data + check + test + build）
 - 執行測試：`pnpm test`
 - 執行型別檢查：`pnpm check`
