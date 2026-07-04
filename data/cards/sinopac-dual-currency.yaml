@@ -8,7 +8,7 @@ rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/dual-currency-card.html
 updatedAt: "2026-07-05"
 # 官網:「新申辦享最高8%現金回饋」= 2%基本+4%精選+2%新申辦行動支付；新申辦2%屬新戶向活動，依政策不收錄
-note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶；新戶行動支付加碼活動未收錄
+note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶；「新申辦」行動支付+2%（含既有卡友活動期間加辦）屬申辦時點型活動，未收錄
 rewards:
   # 官網:「國內一般消費1%現金回饋無上限（2026/7/1~12/31）」
   # 排除依永豐信用卡一般消費定義公告:
@@ -44,13 +44,13 @@ rewards:
     maxTotalRate: 6
     validFrom: "2026-07-01"
     validUntil: "2026-12-31"
-    note: 不含分期、預借現金、賭場交易、各項手續費；加碼限國外實體消費（不含百貨商場內商店、第三方支付）
+    note: 不含分期、預借現金、賭場交易、各項手續費；加碼限國外實體消費（不含百貨商場內商店、第三方支付平台如支付寶、實體店以網路請款如郵輪登船後交易）
     tiers:
       - label: 海外實體加碼
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 設定永豐帳戶自動扣繳＋電子/行動帳單，且前月往來資產月均≥10萬或大戶/大戶Plus等級
+        condition: 綁定永豐臺幣及外幣帳戶自動扣繳＋電子/行動帳單（取消實體帳單），且前月往來資產月均≥10萬或當月大戶/大戶Plus等級（兩項任務同時達成）
         tags:
           - 自動扣繳
           - 電子帳單
@@ -64,9 +64,11 @@ rewards:
     limitUnit: 元
     validFrom: "2026-07-01"
     validUntil: "2026-12-31"
-    note: MCC 6300（壽險+產險），不含特定行銷專案保費、分期保費
-  # 官網:「精選通路（日本三大交通卡儲值、大國藥妝、Rakuten、Amazon、Booking.com、Agoda、Hotels、Airbnb、Klook、KKDAY等）加碼4%」
-  # TODO-REVIEW: 官網摘要以「等」帶過，本清單沿用前期完整清單，需以本期活動辦法逐一核對
+    note: MCC 6300（壽險+產險），不含特定行銷專案保費、分期保費；三商美邦限傳統壽險
+  # 官網逐字核對（2026-07-05 瀏覽器讀取活動頁）:「網購消費：日本三大交通卡(SUICA、PASMO、ICOCA)儲值、
+  # 大國藥妝、Sugi藥妝、Rakuten、Mercari、Amazon、iHerb、Selfridges、eBay、淘寶、Gmarket、Olive Young」
+  # 「旅遊通路：航空公司、旅行社、Booking.com、Agoda、Hotels、Expedia、Trip.com、Airbnb、Klook、KKDAY、
+  # Trivago、AsiaYo、歐特儀松山機場停車」— 27家與本清單完全一致
   - stores:
       - SUICA儲值
       - PASMO儲值
@@ -109,7 +111,7 @@ rewards:
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 設定永豐帳戶自動扣繳＋電子/行動帳單，且前月往來資產月均≥10萬或大戶/大戶Plus等級
+        condition: 綁定永豐臺幣及外幣帳戶自動扣繳＋電子/行動帳單（取消實體帳單），且前月往來資產月均≥10萬或當月大戶/大戶Plus等級（兩項任務同時達成）
         tags:
           - 自動扣繳
           - 電子帳單
