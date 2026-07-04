@@ -1,8 +1,8 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import * as yaml from 'js-yaml';
-import { creditCardSchema, storeEntrySchema, aliasesSchema } from '../src/lib/schema';
-import type { CreditCard, StoreEntry, Aliases, StoreRestriction, SearchIndex } from '../src/lib/types';
+import { creditCardSchema, storeEntrySchema, aliasesSchema, categoriesSchema } from '../src/lib/schema';
+import type { CreditCard, StoreEntry, Aliases, Categories, StoreRestriction, SearchIndex } from '../src/lib/types';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -96,9 +96,31 @@ function loadAliases(): Aliases {
 	return result.data as Aliases;
 }
 
+// --- Step 3.5: Parse and validate categories ---
+
+function loadCategories(): Categories {
+	const categoriesPath = path.join(DATA_DIR, 'categories.yaml');
+	if (!fs.existsSync(categoriesPath)) return {};
+
+	const raw = yaml.load(fs.readFileSync(categoriesPath, 'utf-8'));
+	const result = categoriesSchema.safeParse(raw);
+
+	if (!result.success) {
+		fatal(`categories.yaml: schema validation failed\n  ${result.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('\n  ')}`);
+		return {};
+	}
+
+	return result.data as Categories;
+}
+
 // --- Step 4: Cross-reference validation ---
 
-function crossValidate(cards: CreditCard[], stores: StoreEntry[], aliases: Aliases): void {
+function crossValidate(
+	cards: CreditCard[],
+	stores: StoreEntry[],
+	aliases: Aliases,
+	categories: Categories
+): void {
 	// Check unique IDs
 	const ids = new Set<string>();
 	for (const card of cards) {
@@ -115,21 +137,31 @@ function crossValidate(cards: CreditCard[], stores: StoreEntry[], aliases: Alias
 	}
 
 	const aliasKeys = new Set(Object.keys(aliases));
+	const resolvable = new Set([...aliasKeys, ...Object.keys(categories)]);
+
+	// Category members must be searchable canonical stores
+	for (const [category, members] of Object.entries(categories)) {
+		for (const member of members) {
+			if (!aliasKeys.has(member)) {
+				fatal(`categories.yaml: "${category}" member "${member}" not found in aliases.yaml`);
+			}
+		}
+	}
 
 	for (const card of cards) {
 		for (const rule of card.rewards) {
-			// Check store names exist in aliases (skip wildcard)
+			// Check store names exist in aliases or categories (skip wildcard)
 			for (const store of rule.stores) {
-				if (store !== '*' && !aliasKeys.has(store)) {
-					fatal(`${card.id}: store "${store}" not found in aliases.yaml`);
+				if (store !== '*' && !resolvable.has(store)) {
+					fatal(`${card.id}: store "${store}" not found in aliases.yaml or categories.yaml`);
 				}
 			}
 
-			// Check excludes exist in aliases
+			// Check excludes exist in aliases or categories
 			if (rule.excludes) {
 				for (const exc of rule.excludes) {
-					if (!aliasKeys.has(exc)) {
-						fatal(`${card.id}: excludes "${exc}" not found in aliases.yaml`);
+					if (!resolvable.has(exc)) {
+						fatal(`${card.id}: excludes "${exc}" not found in aliases.yaml or categories.yaml`);
 					}
 				}
 			}
@@ -169,6 +201,12 @@ function crossValidate(cards: CreditCard[], stores: StoreEntry[], aliases: Alias
 			}
 		}
 	}
+	// Members of categories referenced by any card count as referenced
+	for (const [category, members] of Object.entries(categories)) {
+		if (referencedStores.has(category)) {
+			for (const member of members) referencedStores.add(member);
+		}
+	}
 	for (const aliasKey of aliasKeys) {
 		if (!referencedStores.has(aliasKey)) {
 			warn(`orphaned alias: "${aliasKey}" not referenced by any card`);
@@ -178,13 +216,18 @@ function crossValidate(cards: CreditCard[], stores: StoreEntry[], aliases: Alias
 
 // --- Step 5: Build and output ---
 
-function buildOutput(cards: CreditCard[], stores: StoreEntry[], aliases: Aliases): void {
+function buildOutput(
+	cards: CreditCard[],
+	stores: StoreEntry[],
+	aliases: Aliases,
+	categories: Categories
+): void {
 	const storeRestrictions: Record<string, StoreRestriction> = {};
 	for (const store of stores) {
 		storeRestrictions[store.name] = store.restrictions;
 	}
 
-	const searchIndex: SearchIndex = { aliases, storeRestrictions };
+	const searchIndex: SearchIndex = { aliases, storeRestrictions, categories };
 
 	if (!fs.existsSync(OUTPUT_DIR)) {
 		fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -193,7 +236,7 @@ function buildOutput(cards: CreditCard[], stores: StoreEntry[], aliases: Aliases
 	fs.writeFileSync(path.join(OUTPUT_DIR, 'cards.json'), JSON.stringify(cards, null, 2));
 	fs.writeFileSync(path.join(OUTPUT_DIR, 'search-index.json'), JSON.stringify(searchIndex, null, 2));
 
-	console.log(`Built: ${cards.length} cards, ${stores.length} store restrictions, ${Object.keys(aliases).length} aliases`);
+	console.log(`Built: ${cards.length} cards, ${stores.length} store restrictions, ${Object.keys(aliases).length} aliases, ${Object.keys(categories).length} categories`);
 }
 
 // --- Main ---
@@ -201,8 +244,9 @@ function buildOutput(cards: CreditCard[], stores: StoreEntry[], aliases: Aliases
 const cards = loadCards();
 const stores = loadStores();
 const aliases = loadAliases();
+const categories = loadCategories();
 
-crossValidate(cards, stores, aliases);
+crossValidate(cards, stores, aliases, categories);
 
 if (fatalErrors > 0) {
 	console.error(`\nBuild failed: ${fatalErrors} fatal error(s), ${warnings} warning(s)`);
@@ -216,5 +260,5 @@ if (warnings > 0) {
 if (validateOnly) {
 	console.log('Validation passed.');
 } else {
-	buildOutput(cards, stores, aliases);
+	buildOutput(cards, stores, aliases, categories);
 }
