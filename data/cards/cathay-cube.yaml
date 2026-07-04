@@ -1,0 +1,249 @@
+id: cathay-cube
+name: CUBE卡
+bank: 國泰世華
+network:
+  - visa
+rewardType: 點數回饋
+pointsName: 小樹點
+sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube
+updatedAt: "2026-07-04"
+# 官網:「小樹點(信用卡)點數價值為1點等值NT$1元」「每月指定消費累計以消費日當日信用額度加計50萬元為限」
+note: 小樹點1點=1元，消費入帳後次二日回饋；指定消費回饋每月以信用額度+50萬元內之消費計算；權益方案每日可於CUBE App切換一次
+rewards:
+  # 官網:「一般消費享0.3%」
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    excludes:
+      - 代繳
+      - 悠遊卡自動加值
+    note: 不含信用卡費、預借現金、分期、菸酒、代收代售、禮券、eTag儲值等
+
+  # 官網:「一般消費享0.3%」（海外一般消費，另有海外交易手續費）
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+
+  # 玩數位方案 — 官網:「Level 1 玩數位2%、Level 2 3%、Level 3 3.3%」
+  # 官網通路:「AI工具：ChatGPT、Canvas、Claude、Cursor等；串流：Apple媒體、Netflix、Disney+、Spotify等；網購：蝦皮、momo、PChome、小樹購」
+  - stores:
+      - ChatGPT
+      - Claude
+      - Netflix
+      - Disney+
+      - Spotify
+      - 蝦皮
+      - momo
+      - PChome
+      - 小樹購
+    storeLabel: 玩數位（指定數位通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 通路以官網公告為準（另含 Cursor、Apple 服務等）；限本卡直刷或綁定 Apple/Google/Samsung/Garmin Pay
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「玩數位」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「玩數位」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「玩數位」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 樂饗購方案 — 官網:「Level 1 樂饗購2%、Level 2 3%、Level 3 3.3%」
+  # 官網通路:「百貨：遠東SOGO、新光三越、台北101、誠品等；外送：Uber Eats、foodpanda；餐飲：麥當勞等；藥妝：康是美、屈臣氏」
+  - stores:
+      - 遠東SOGO
+      - 新光三越
+      - 台北101
+      - 誠品
+      - Uber Eats
+      - foodpanda
+      - 麥當勞
+      - 康是美
+      - 屈臣氏
+    storeLabel: 樂饗購（指定美食/購物）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 通路以官網公告為準（含全台主要百貨、指定餐飲）；限選定本方案期間之消費
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「樂饗購」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「樂饗購」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「樂饗購」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 趣旅行方案（國內可訂購之旅遊通路）— 官網:「Level 1 趣旅行2%、Level 2 3%、Level 3 3.3%」
+  # 官網通路:「航空：中華航空、長榮航空、星宇、台灣虎航等19家；訂房：Agoda、Airbnb、Booking.com、Trip.com等；旅行社：雄獅、可樂、東南、五福等」
+  - stores:
+      - 中華航空
+      - 長榮航空
+      - 星宇航空
+      - 台灣虎航
+      - Agoda
+      - Airbnb
+      - Booking.com
+      - Trip.com
+      - 雄獅旅遊
+      - 可樂旅遊
+      - 東南旅遊
+      - 五福旅遊
+      - 東橫INN
+    storeLabel: 趣旅行（指定旅遊通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 通路以官網公告為準（航空共19家、含指定飯店）
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「趣旅行」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「趣旅行」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「趣旅行」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 趣旅行方案（海外消費）— 官網:「3%指定海外消費」
+  - stores:
+      - "*"
+    storeLabel: 海外消費（趣旅行）
+    region: international
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    # TODO-REVIEW: 官網寫「指定海外消費」，日本活動頁寫「海外實體消費」— 需確認是否含海外網購
+    note: 需切換至「趣旅行」方案；以官網定義之海外消費為準
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「趣旅行」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「趣旅行」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換至「趣旅行」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 集精選方案 — 官網:「集精選2%」（各Level均2%）
+  # 官網通路:「量販：家樂福、LOPIA、全聯；加油：台灣中油直營站；超商：7-11、全家；家居：IKEA；停車：車麻吉、uTagGo；充電：U-POWER等」
+  - stores:
+      - 家樂福
+      - 全聯
+      - LOPIA
+      - 台灣中油
+      - 7-ELEVEN
+      - 全家
+      - IKEA
+      - 車麻吉
+      - uTagGo
+      - U-POWER
+    storeLabel: 集精選（指定生活通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 通路以官網公告為準（另含指定充電樁業者）；各權益等級均為2%
+    tiers:
+      - label: 集精選
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「集精選」
+        tags:
+          - 方案切換
