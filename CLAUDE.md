@@ -43,6 +43,7 @@ src/
       filter.ts          # 卡組織/有效期/排除類別過濾
       scoring.ts         # 回饋率區間計算（保底~最高）
       search.ts          # 四階段搜尋管線
+      restriction.ts     # 通路限制提示文字（describeRestriction）
       index.ts           # StoreIndex + PrefixIndex 建構
     stores/              # Svelte reactive stores
       search.svelte.ts   # 搜尋狀態（用 getter 而非 $derived，方便測試）
