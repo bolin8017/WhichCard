@@ -20,6 +20,7 @@ description: Scan card data for expired/expiring/stale entries and draft updates
 3. 跑 `pnpm validate-data` 確認 warning 消除。
 4. 回報：每張卡的變更摘要（新增/修改/刪除了哪些規則、依據哪個官網段落）、
    無法確認需人工判斷的項目。
+   **每個待核對項目必須附上對應的官網 URL 與區塊位置，讓使用者能直接點開比對。**
 
 ## 驗收
 

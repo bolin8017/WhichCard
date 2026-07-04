@@ -49,6 +49,8 @@ description: Draft a new card YAML (or re-extract an existing one) from official
 4. 跑 `pnpm validate-data`，修到只剩預期中的 warning。
 5. 回報：規則摘要表（通路/區域/區間/效期）、已排除清單＋原因、
    所有 TODO-REVIEW、請使用者核對的官網數字清單。
+   **每個待核對項目必須附上對應的官網 URL 與區塊位置（如「注意事項第14條」
+   「指定超商旁的ⓘ」），讓使用者能直接點開比對，不必自己翻找。**
 
 ## 驗收
 
