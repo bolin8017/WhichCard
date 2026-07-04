@@ -103,17 +103,25 @@ describe('isRuleActive', () => {
 });
 
 describe('isExcluded', () => {
-	it('store in excludes is excluded', () => {
-		const rule = makeRule({ excludes: ['保費', '代繳'] });
-		expect(isExcluded('保費', rule)).toBe(true);
+	const rule = makeRule({ excludes: ['保費', '代繳'] });
+
+	it('excluded when any expanded name is in excludes (台電 → 代繳)', () => {
+		expect(isExcluded(['台電', '代繳'], rule)).toBe(true);
 	});
 
-	it('store not in excludes is not excluded', () => {
-		const rule = makeRule({ excludes: ['保費', '代繳'] });
-		expect(isExcluded('全家', rule)).toBe(false);
+	it('not excluded when expansion misses excludes', () => {
+		expect(isExcluded(['台電'], rule)).toBe(false);
+	});
+
+	it('direct category search still excluded', () => {
+		expect(isExcluded(['保費'], rule)).toBe(true);
+	});
+
+	it('store not related to excludes is not excluded', () => {
+		expect(isExcluded(['全家'], rule)).toBe(false);
 	});
 
 	it('no excludes means not excluded', () => {
-		expect(isExcluded('保費', makeRule())).toBe(false);
+		expect(isExcluded(['保費'], makeRule())).toBe(false);
 	});
 });

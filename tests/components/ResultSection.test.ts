@@ -22,7 +22,8 @@ const makeResult = (id: string, maxReward: number): SearchResult => ({
 		limitUnit: '元'
 	},
 	maxReward,
-	isSpecificMatch: false
+	isSpecificMatch: false,
+	matchKind: 'wildcard'
 });
 
 describe('ResultSection', () => {

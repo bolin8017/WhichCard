@@ -1,14 +1,15 @@
 import { createSearchEngine, type SearchEngine, type SearchResults } from '$lib/engine/search';
-import type { CreditCard, Aliases, StoreRestriction, Region } from '$lib/types';
+import type { CreditCard, Aliases, StoreRestriction, Region, Categories } from '$lib/types';
 
 let engine: SearchEngine | null = null;
 
 export function initSearchEngine(
 	cards: CreditCard[],
 	aliases: Aliases,
-	restrictions: Record<string, StoreRestriction>
+	restrictions: Record<string, StoreRestriction>,
+	categories: Categories = {}
 ): void {
-	engine = createSearchEngine(cards, aliases, restrictions);
+	engine = createSearchEngine(cards, aliases, restrictions, categories);
 }
 
 const emptyResults: SearchResults = {

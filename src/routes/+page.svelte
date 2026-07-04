@@ -19,7 +19,12 @@
 		]);
 		const cards = cardsModule.default as unknown as CreditCard[];
 		const searchIndex = indexModule.default as unknown as SearchIndex;
-		initSearchEngine(cards, searchIndex.aliases, searchIndex.storeRestrictions);
+		initSearchEngine(
+			cards,
+			searchIndex.aliases,
+			searchIndex.storeRestrictions,
+			searchIndex.categories ?? {}
+		);
 		initialized = true;
 	});
 

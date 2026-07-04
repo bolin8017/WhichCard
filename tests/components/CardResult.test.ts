@@ -34,6 +34,7 @@ const makeResult = (overrides: Partial<SearchResult> = {}): SearchResult => ({
 	},
 	maxReward: 7,
 	isSpecificMatch: true,
+	matchKind: 'store',
 	...overrides
 });
 

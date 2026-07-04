@@ -1,6 +1,7 @@
-import type { CreditCard, Aliases, StoreRestriction, Region, RewardRule } from '$lib/types';
+import type { CreditCard, Aliases, StoreRestriction, Region, RewardRule, Categories } from '$lib/types';
 import { buildStoreIndex, buildPrefixIndex, type StoreIndex, type PrefixIndex } from './index';
 import { resolveAlias } from './alias';
+import { buildCategoryIndex, expandStores } from './category';
 import { isCardAccepted, isRuleActive, isExcluded } from './filter';
 import { computeMaxReward, getRuleMaxReward } from './scoring';
 
@@ -10,12 +11,15 @@ export interface SearchParams {
 	myCardIds?: string[];
 }
 
+export type MatchKind = 'store' | 'category' | 'wildcard';
+
 export interface SearchResult {
 	card: CreditCard;
 	matchedRule: RewardRule;
 	baseRule?: RewardRule;
 	maxReward: number;
 	isSpecificMatch: boolean;
+	matchKind: MatchKind;
 }
 
 export interface SearchResults {
@@ -33,10 +37,12 @@ export interface SearchEngine {
 export function createSearchEngine(
 	cards: CreditCard[],
 	aliases: Aliases,
-	restrictions: Record<string, StoreRestriction>
+	restrictions: Record<string, StoreRestriction>,
+	categories: Categories = {}
 ): SearchEngine {
 	const storeIndex = buildStoreIndex(cards);
 	const prefixIndex = buildPrefixIndex(aliases);
+	const categoryIndex = buildCategoryIndex(categories);
 
 	function search(params: SearchParams): SearchResults {
 		const { query, region, myCardIds } = params;
@@ -62,42 +68,51 @@ export function createSearchEngine(
 		const generalByCard = new Map<string, SearchResult>();
 
 		for (const storeName of matchedStores) {
-			// Get specific rules for this store
-			const specificRefs = storeIndex.get(storeName) ?? [];
-			// Get wildcard rules
-			const wildcardRefs = storeIndex.get('*') ?? [];
+			const expanded = expandStores(storeName, categoryIndex);
 
-			// Process specific matches
-			for (const ref of specificRefs) {
-				const card = cards[ref.cardIndex];
-				const rule = card.rewards[ref.ruleIndex];
+			// Process specific matches: union of rules over the expanded set
+			for (const name of expanded) {
+				const kind: MatchKind = name === storeName ? 'store' : 'category';
+				for (const ref of storeIndex.get(name) ?? []) {
+					const card = cards[ref.cardIndex];
+					const rule = card.rewards[ref.ruleIndex];
 
-				if (!passesFilters(card, rule, storeName, region, restrictions, myCardIds)) continue;
+					if (!passesFilters(card, rule, expanded, storeName, region, restrictions, myCardIds))
+						continue;
 
-				// Find this card's wildcard rule for same region as baseRule
-				const baseRule = findWildcardRule(card, region, storeName);
+					// Find this card's wildcard rule for same region as baseRule
+					const baseRule = findWildcardRule(card, region, expanded);
 
-				const maxReward = computeMaxReward(rule, baseRule);
+					const maxReward = computeMaxReward(rule, baseRule);
 
-				const existing = specificByCard.get(card.id);
-				if (!existing || maxReward > existing.maxReward) {
-					specificByCard.set(card.id, {
-						card,
-						matchedRule: rule,
-						baseRule,
-						maxReward,
-						isSpecificMatch: true
-					});
+					const existing = specificByCard.get(card.id);
+					const better =
+						!existing ||
+						maxReward > existing.maxReward ||
+						(maxReward === existing.maxReward &&
+							kind === 'store' &&
+							existing.matchKind === 'category');
+					if (better) {
+						specificByCard.set(card.id, {
+							card,
+							matchedRule: rule,
+							baseRule,
+							maxReward,
+							isSpecificMatch: true,
+							matchKind: kind
+						});
+					}
 				}
 			}
 
 			// Process wildcard matches (only for cards NOT already in specific)
-			for (const ref of wildcardRefs) {
+			for (const ref of storeIndex.get('*') ?? []) {
 				const card = cards[ref.cardIndex];
 				const rule = card.rewards[ref.ruleIndex];
 
 				if (specificByCard.has(card.id)) continue;
-				if (!passesFilters(card, rule, storeName, region, restrictions, myCardIds)) continue;
+				if (!passesFilters(card, rule, expanded, storeName, region, restrictions, myCardIds))
+					continue;
 
 				const maxReward = getRuleMaxReward(rule);
 
@@ -107,7 +122,8 @@ export function createSearchEngine(
 						card,
 						matchedRule: rule,
 						maxReward,
-						isSpecificMatch: false
+						isSpecificMatch: false,
+						matchKind: 'wildcard'
 					});
 				}
 			}
@@ -127,6 +143,7 @@ export function createSearchEngine(
 	function passesFilters(
 		card: CreditCard,
 		rule: RewardRule,
+		expanded: string[],
 		storeName: string,
 		region: Region,
 		storeRestrictions: Record<string, StoreRestriction>,
@@ -134,7 +151,7 @@ export function createSearchEngine(
 	): boolean {
 		if (rule.region !== region) return false;
 		if (!isRuleActive(rule)) return false;
-		if (isExcluded(storeName, rule)) return false;
+		if (isExcluded(expanded, rule)) return false;
 		if (!isCardAccepted(card, storeName, storeRestrictions)) return false;
 		if (myCardIds && !myCardIds.includes(card.id)) return false;
 		return true;
@@ -143,14 +160,14 @@ export function createSearchEngine(
 	function findWildcardRule(
 		card: CreditCard,
 		region: Region,
-		storeName: string
+		expanded: string[]
 	): RewardRule | undefined {
 		return card.rewards.find(
 			(r) =>
 				r.stores.includes('*') &&
 				r.region === region &&
 				isRuleActive(r) &&
-				!isExcluded(storeName, r)
+				!isExcluded(expanded, r)
 		);
 	}
 

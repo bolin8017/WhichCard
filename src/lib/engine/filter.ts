@@ -34,7 +34,7 @@ export function isRuleActive(rule: RewardRule): boolean {
 	return true;
 }
 
-export function isExcluded(storeName: string, rule: RewardRule): boolean {
+export function isExcluded(expandedStores: string[], rule: RewardRule): boolean {
 	if (!rule.excludes) return false;
-	return rule.excludes.includes(storeName);
+	return rule.excludes.some((e) => expandedStores.includes(e));
 }
