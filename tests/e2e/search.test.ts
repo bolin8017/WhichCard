@@ -49,6 +49,31 @@ test.describe('Home page', () => {
 	});
 });
 
+test.describe('Range display and category exclusion', () => {
+	test('tiered card shows floor-ceiling range (CUBE at 蝦皮)', async ({ page }) => {
+		await page.goto('/');
+		await page.getByPlaceholder('輸入商家或通路名稱...').fill('蝦皮');
+		await expect(page.getByText('CUBE卡')).toBeVisible();
+		await expect(page.getByText('0.3% ~ 3.3%')).toBeVisible();
+	});
+
+	test('excluded category member hides excluding cards (台電 → 代繳)', async ({ page }) => {
+		await page.goto('/');
+		await page.getByPlaceholder('輸入商家或通路名稱...').fill('台電');
+		// DAWHO and CUBE domestic wildcards both exclude 代繳 — must not render
+		await expect(page.getByText('DAWHO現金回饋信用卡')).toHaveCount(0);
+		await expect(page.getByText('CUBE卡')).toHaveCount(0);
+	});
+
+	test('category exclusion is per-card (國泰人壽 → 保費)', async ({ page }) => {
+		await page.goto('/');
+		await page.getByPlaceholder('輸入商家或通路名稱...').fill('國泰人壽');
+		// DAWHO excludes 保費 → hidden; CUBE does not exclude 保費 → visible at base rate
+		await expect(page.getByText('CUBE卡')).toBeVisible();
+		await expect(page.getByText('DAWHO現金回饋信用卡')).toHaveCount(0);
+	});
+});
+
 test.describe('My Cards', () => {
 	test('navigate to my-cards, select cards, verify count', async ({ page }) => {
 		await page.goto('/');
