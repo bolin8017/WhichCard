@@ -19,7 +19,8 @@ export const CONDITION_TAGS = [
 	'新戶',
 	'會員等級',
 	'限期',
-	'需登錄'
+	'需登錄',
+	'方案切換'
 ] as const;
 export type ConditionTag = (typeof CONDITION_TAGS)[number];
 
@@ -39,6 +40,8 @@ export interface RewardRule {
 	rate: number;
 	limit: number;
 	limitUnit: LimitUnit;
+	maxTotalRate?: number;
+	sourceUrl?: string;
 	excludes?: string[];
 	validFrom?: string;
 	validUntil?: string;
@@ -52,6 +55,7 @@ export interface CreditCard {
 	bank: string;
 	network: CardNetwork[];
 	rewardType: RewardType;
+	pointsName?: string;
 	sourceUrl: string;
 	updatedAt: string;
 	note?: string;
@@ -73,7 +77,10 @@ export interface StoreEntry {
 
 export type Aliases = Record<string, string[]>;
 
+export type Categories = Record<string, string[]>;
+
 export interface SearchIndex {
 	aliases: Aliases;
 	storeRestrictions: Record<string, StoreRestriction>;
+	categories?: Categories;
 }
