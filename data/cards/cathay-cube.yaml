@@ -191,11 +191,13 @@ rewards:
           - 方案切換
           - 會員等級
 
-  # 趣旅行（海外消費）— 官網:「海外實體消費」；日本遊樂園（迪士尼/環球影城等）亦屬本方案
-  # TODO-REVIEW: 官網寫「指定海外消費」，活動頁寫「海外實體」— 需確認是否含海外網購
+  # 趣旅行（海外實體消費）— 官網ⓘ:「指交易地點非台灣或交易幣別非台幣，使用實體信用卡過卡或感應式刷卡
+  # (含Apple Pay/Samsung Pay/Google Pay/Garmin Pay)，且須為面對面交易，交通卡儲值不列入計算」
+  # 官網ⓘ:「國外餐飲以MCC 5811/5812/5814認定」「排除：醫療事業、博奕類、飛機/郵輪上之消費、
+  # 境外投資交易平台(eToro等)、其他經本行公告排除項目(包括但不限於保費)」
   - stores:
       - "*"
-    storeLabel: 海外消費（趣旅行）
+    storeLabel: 海外實體消費（趣旅行）
     region: international
     rate: 0.3
     limit: 0
@@ -204,7 +206,7 @@ rewards:
     sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
     validFrom: "2026-01-01"
     validUntil: "2026-12-31"
-    note: 需切換至「趣旅行」；以官網定義之海外消費為準
+    note: 需切換至「趣旅行」；限面對面交易（實體卡或行動支付感應），不含海外網購；交通卡儲值不列入；排除醫療、博奕、飛機/郵輪上消費、境外投資平台、保費
     tiers:
       - label: Level 1
         bonus: 1.7
@@ -283,9 +285,7 @@ rewards:
         tags:
           - 方案切換
 
-  # 台塑家（2026/6/1~12/31）— 官網:「2%」
-  # TODO-REVIEW: 方案頁將超商(7-11/全家/萊爾富)列於台塑家，但注意事項14稱超商限「集精選」— 暫不列入，需核對
-  # TODO-REVIEW: 台塑家/全支付是否適用 Level 分級未明，暫以固定2%收錄
+  # 台塑家（2026/6/1~12/31）— 官網:「2%」；不適用Level分級（使用者核對確認），固定2%
   - stores:
       - 台塑石油
       - 台亞
@@ -311,8 +311,33 @@ rewards:
         tags:
           - 方案切換
 
-  # 全支付（2026/4/22~12/31）— 官網:「2%」；全聯/大全聯為本方案指定通路（一般回饋原排除，此為方案豁免）
-  # TODO-REVIEW: 是否限透過全支付/PX Pay支付、或綁卡刷卡亦可，需核對活動辦法
+  # 台塑家之指定超商 carve-out — 官網方案頁「指定超商：7-ELEVEN實體門市、全家便利商店實體門市、
+  # 萊爾富實體門市」（一般回饋0.3%排除超商，故無方案時保底為0）
+  - stores:
+      - 7-ELEVEN
+      - 全家
+      - 萊爾富
+    storeLabel: 台塑家（指定超商）
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-06-01"
+    validUntil: "2026-12-31"
+    note: 限實體門市；7-ELEVEN/全家於「集精選」方案亦有2%（萊爾富僅台塑家）；未選方案時超商無回饋
+    tiers:
+      - label: 台塑家
+        bonus: 2
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「台塑家」
+        tags:
+          - 方案切換
+
+  # 全支付（2026/4/22~12/31）— 官網:「2%」；不適用Level分級，固定2%（使用者核對確認）
+  # 全聯/大全聯為本方案指定通路（一般回饋原排除，此為方案豁免）；須透過全支付App支付（使用者核對確認）
   - stores:
       - 全聯
       - 大全聯
@@ -325,19 +350,19 @@ rewards:
     sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
     validFrom: "2026-04-22"
     validUntil: "2026-12-31"
-    note: 未選「全支付」方案時超市消費無回饋；另含全支付國內合作通路
+    note: 未選「全支付」方案時超市消費無回饋；限透過全支付App綁定本卡支付；另含全支付國內合作通路
     tiers:
       - label: 全支付
         bonus: 2
         limit: 0
         limitUnit: 點
-        condition: 於CUBE App將權益方案切換至「全支付」，依官網以全支付合作方式消費
+        condition: 於CUBE App將權益方案切換至「全支付」，並透過全支付App綁定本卡支付
         tags:
           - 方案切換
           - 行動支付
 
   # 慶生月（2026/7/1~9/30）— 官網:「KTV/台中特選餐廳/日本遊樂園10%；新光三越/Uber Eats/Klook/FunNow 3.5%」
-  # TODO-REVIEW: 「慶生月」是否限持卡人生日當月適用，需核對活動辦法
+  # 限持卡人生日當月適用（使用者核對確認）
   - stores:
       - 錢櫃
       - 好樂迪
@@ -357,7 +382,7 @@ rewards:
         bonus: 9.7
         limit: 0
         limitUnit: 點
-        condition: 於CUBE App將權益方案切換至「慶生月」（活動2026/7/1~9/30）
+        condition: 於CUBE App將權益方案切換至「慶生月」，限持卡人生日當月（活動2026/7/1~9/30）
         tags:
           - 方案切換
           - 限期
@@ -378,7 +403,7 @@ rewards:
         bonus: 3.2
         limit: 0
         limitUnit: 點
-        condition: 於CUBE App將權益方案切換至「慶生月」（活動2026/7/1~9/30）
+        condition: 於CUBE App將權益方案切換至「慶生月」，限持卡人生日當月（活動2026/7/1~9/30）
         tags:
           - 方案切換
           - 限期
