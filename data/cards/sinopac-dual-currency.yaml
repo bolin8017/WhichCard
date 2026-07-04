@@ -6,9 +6,13 @@ network:
   - mastercard
 rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/dual-currency-card.html
-updatedAt: "2026-03-05"
-note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶
+updatedAt: "2026-07-05"
+# 官網:「新申辦享最高8%現金回饋」= 2%基本+4%精選+2%新申辦行動支付；新申辦2%屬新戶向活動，依政策不收錄
+note: 申卡須綁定永豐外幣帳戶自動扣繳，國外回饋金存入外幣帳戶；「新申辦」行動支付+2%（含既有卡友活動期間加辦）屬申辦時點型活動，未收錄
 rewards:
+  # 官網:「國內一般消費1%現金回饋無上限（2026/7/1~12/31）」
+  # 排除依永豐信用卡一般消費定義公告:
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
   - stores:
       - "*"
     storeLabel: 國內全通路
@@ -19,9 +23,17 @@ rewards:
     excludes:
       - 保費
       - 代繳
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 不含分期交易、特定行銷專案保費
+      - 全聯
+      - 大全聯
+      - 便利商店
+      - 悠遊卡自動加值
+      - 一卡通加值
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 不含分期交易、特定行銷專案保費；依永豐一般消費定義，另不含PXGo!/PX Pay/全支付、超商APP及網站、繳費平台、小額支付平台、停車場、eTag儲值、代扣基金、稅款/學費/醫療/規費、境外投資平台
+  # 官網原文:「完成綁定永豐銀行臺外幣帳戶為信用卡自動扣繳帳戶並成功扣款，且完成電子或行動帳單設定」
+  # ＋「前月往來資產月平均餘額達十萬元(含)以上 或 當月大戶/大戶Plus等級」（擇一）→ 單一檔位，上限800
+  # 前期「一般用戶300元」檔位本期已無；薪轉戶另有獨立一次性活動（加碼300元刷卡金/抽獎），非回饋率檔位，未收錄
   - stores:
       - "*"
     storeLabel: 海外全通路
@@ -29,38 +41,34 @@ rewards:
     rate: 2
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 不含分期交易、預借現金、賭場交易、爭議款、帳務調整、各項手續費
+    maxTotalRate: 6
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 不含分期、預借現金、賭場交易、各項手續費；加碼限國外實體消費（不含百貨商場內商店、第三方支付平台如支付寶、實體店以網路請款如郵輪登船後交易）
     tiers:
-      - label: 一般用戶
-        bonus: 4
-        limit: 300
-        limitUnit: 元
-        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單（限國外實體消費，不含百貨商場內商店、第三方支付）
-        tags:
-          - 自動扣繳
-          - 電子帳單
-          - 指定通路
-      - label: 大戶/大戶Plus
+      - label: 海外實體加碼
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬（限國外實體消費，不含百貨商場內商店、第三方支付）
+        condition: 綁定永豐臺幣及外幣帳戶自動扣繳＋電子/行動帳單（取消實體帳單），且前月往來資產月均≥10萬或當月大戶/大戶Plus等級（兩項任務同時達成）
         tags:
           - 自動扣繳
           - 電子帳單
           - 會員等級
-          - 指定通路
+  # 官網:「保費1.2%現金回饋無上限（MCC 6300，壽險+產險）（2026/7/1~12/31）」
   - stores:
       - 保費
     region: domestic
     rate: 1.2
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: MCC 6300（壽險+產險），不含特定行銷專案保費，不含分期保費
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: MCC 6300（壽險+產險），不含特定行銷專案保費、分期保費；三商美邦限傳統壽險
+  # 官網逐字核對（2026-07-05 瀏覽器讀取活動頁）:「網購消費：日本三大交通卡(SUICA、PASMO、ICOCA)儲值、
+  # 大國藥妝、Sugi藥妝、Rakuten、Mercari、Amazon、iHerb、Selfridges、eBay、淘寶、Gmarket、Olive Young」
+  # 「旅遊通路：航空公司、旅行社、Booking.com、Agoda、Hotels、Expedia、Trip.com、Airbnb、Klook、KKDAY、
+  # Trivago、AsiaYo、歐特儀松山機場停車」— 27家與本清單完全一致
   - stores:
       - SUICA儲值
       - PASMO儲值
@@ -94,23 +102,16 @@ rewards:
     rate: 1
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
     note: 不含百貨商場內商店、第三方支付平台交易
     tiers:
-      - label: 一般用戶
-        bonus: 4
-        limit: 300
-        limitUnit: 元
-        condition: 設定永豐臺外幣帳戶自動扣繳 + 綁定電子/行動帳單
-        tags:
-          - 自動扣繳
-          - 電子帳單
-      - label: 大戶/大戶Plus
+      - label: 精選通路加碼
         bonus: 4
         limit: 800
         limitUnit: 元
-        condition: 自動扣繳 + 電子帳單 + 大戶/大戶Plus等級或前月永豐資產月均餘額≥10萬
+        condition: 綁定永豐臺幣及外幣帳戶自動扣繳＋電子/行動帳單（取消實體帳單），且前月往來資產月均≥10萬或當月大戶/大戶Plus等級（兩項任務同時達成）
         tags:
           - 自動扣繳
           - 電子帳單

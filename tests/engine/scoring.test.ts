@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { getRuleMaxReward, computeMaxReward } from '$lib/engine/scoring';
+import { getRuleRateRange, combineRateRanges } from '$lib/engine/scoring';
 import type { RewardRule } from '$lib/types';
 
 const makeRule = (overrides: Partial<RewardRule> = {}): RewardRule => ({
@@ -11,59 +11,63 @@ const makeRule = (overrides: Partial<RewardRule> = {}): RewardRule => ({
 	...overrides
 });
 
-describe('getRuleMaxReward', () => {
-	it('rule with no tiers: maxReward = rate', () => {
-		expect(getRuleMaxReward(makeRule({ rate: 1.5 }))).toBe(1.5);
+describe('getRuleRateRange', () => {
+	it('no tiers: min = max = rate', () => {
+		expect(getRuleRateRange(makeRule({ rate: 1.5 }))).toEqual({ min: 1.5, max: 1.5 });
 	});
 
-	it('rule with tiers: maxReward = rate + max(tier.bonus)', () => {
+	it('tiers: max = rate + best bonus', () => {
 		const rule = makeRule({
 			rate: 1,
 			tiers: [
-				{ label: 'A', bonus: 2.5, limit: 400, limitUnit: '元', condition: 'cond A' },
-				{ label: 'B', bonus: 4, limit: 1000, limitUnit: '元', condition: 'cond B' }
+				{ label: 'A', bonus: 2.5, limit: 400, limitUnit: '元', condition: 'a' },
+				{ label: 'B', bonus: 4, limit: 1000, limitUnit: '元', condition: 'b' }
 			]
 		});
-		expect(getRuleMaxReward(rule)).toBe(5); // 1 + 4
+		expect(getRuleRateRange(rule)).toEqual({ min: 1, max: 5 });
 	});
 
-	it('rate 0 with tiers: maxReward = max(tier.bonus)', () => {
+	it('authored maxTotalRate overrides tier derivation', () => {
+		const rule = makeRule({
+			rate: 1,
+			maxTotalRate: 3, // bank says 最高3%, tiers would derive 5
+			tiers: [
+				{ label: 'A', bonus: 2, limit: 0, limitUnit: '元', condition: 'a' },
+				{ label: 'B', bonus: 4, limit: 0, limitUnit: '元', condition: 'b' }
+			]
+		});
+		expect(getRuleRateRange(rule)).toEqual({ min: 1, max: 3 });
+	});
+
+	it('zero-base rule (悠遊卡 pattern): min 0', () => {
 		const rule = makeRule({
 			rate: 0,
-			tiers: [
-				{ label: 'A', bonus: 3, limit: 100, limitUnit: '元', condition: 'cond' },
-				{ label: 'B', bonus: 5, limit: 500, limitUnit: '元', condition: 'cond' }
-			]
+			tiers: [{ label: '大戶', bonus: 3, limit: 100, limitUnit: '元', condition: 'c' }]
 		});
-		expect(getRuleMaxReward(rule)).toBe(5); // 0 + 5
+		expect(getRuleRateRange(rule)).toEqual({ min: 0, max: 3 });
 	});
 
-	it('empty tiers array: maxReward = rate', () => {
-		expect(getRuleMaxReward(makeRule({ rate: 2, tiers: [] }))).toBe(2);
+	it('empty tiers array: min = max = rate', () => {
+		expect(getRuleRateRange(makeRule({ rate: 2, tiers: [] }))).toEqual({ min: 2, max: 2 });
 	});
 });
 
-describe('computeMaxReward', () => {
-	it('single rule: uses that rule reward', () => {
-		const specific = makeRule({ rate: 3 });
-		expect(computeMaxReward(specific)).toBe(3);
+describe('combineRateRanges', () => {
+	it('no base: matched range unchanged', () => {
+		expect(combineRateRanges({ min: 2, max: 2 })).toEqual({ min: 2, max: 2 });
 	});
 
-	it('specific + wildcard: takes max of both', () => {
-		const specific = makeRule({ rate: 3 });
-		const wildcard = makeRule({
-			rate: 1,
-			tiers: [{ label: 'X', bonus: 4, limit: 0, limitUnit: '元', condition: 'c' }]
+	it('base with higher ceiling raises max only', () => {
+		expect(combineRateRanges({ min: 2, max: 2 }, { min: 1, max: 5 })).toEqual({
+			min: 2,
+			max: 5
 		});
-		expect(computeMaxReward(specific, wildcard)).toBe(5); // max(3, 1+4)
 	});
 
-	it('specific higher than wildcard', () => {
-		const specific = makeRule({
-			rate: 3,
-			tiers: [{ label: 'X', bonus: 5, limit: 0, limitUnit: '元', condition: 'c' }]
+	it('min always stays the matched rule floor (specific rule overrides base)', () => {
+		expect(combineRateRanges({ min: 0, max: 3 }, { min: 1, max: 1 })).toEqual({
+			min: 0,
+			max: 3
 		});
-		const wildcard = makeRule({ rate: 1 });
-		expect(computeMaxReward(specific, wildcard)).toBe(8); // max(3+5, 1)
 	});
 });

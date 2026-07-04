@@ -27,6 +27,7 @@ describe('type constants', () => {
 	it('has all expected condition tags', () => {
 		expect(CONDITION_TAGS).toContain('自動扣繳');
 		expect(CONDITION_TAGS).toContain('需登錄');
-		expect(CONDITION_TAGS).toHaveLength(9);
+		expect(CONDITION_TAGS).toContain('方案切換');
+		expect(CONDITION_TAGS).toHaveLength(10);
 	});
 });

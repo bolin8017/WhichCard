@@ -5,9 +5,13 @@ network:
   - visa
 rewardType: 現金回饋
 sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/DAWHO.html
-updatedAt: "2026-03-07"
-note: 分期交易不享回饋；回饋金存入永豐DAWHO數位存款帳戶
+updatedAt: "2026-07-05"
+note: 分期交易不享回饋；回饋金存入永豐DAWHO數位存款帳戶；大大等級無加碼
 rewards:
+  # 官網:「國內一般消費1%」「大戶Plus等級享國內全通路一般消費最高5%」
+  # 官網:「活動期間 2026/7/1-2026/12/31」
+  # 排除依永豐信用卡一般消費定義公告:
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
   - stores:
       - "*"
     storeLabel: 國內全通路
@@ -15,46 +19,55 @@ rewards:
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 5
     excludes:
       - 保費
       - 代繳
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 加碼不含保費代繳
+      - 全聯
+      - 大全聯
+      - 便利商店
+      - 悠遊卡自動加值
+      - 一卡通加值
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 依永豐一般消費定義，另不含PXGo!/PX Pay/全支付、超商APP及網站、繳費平台、小額支付平台（停車/速食/手搖飲）、停車場、eTag儲值、代扣基金、稅款/學費/醫療/規費、境外投資平台（幣安/eToro/Wise等）；加碼上限國內外合併計算
     tiers:
+      # 官網:「大戶等級加碼2.5%，上限NT$400/月帳單週期」
       - label: 大戶
         bonus: 2.5
         limit: 400
         limitUnit: 元
-        condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單（取消實體帳單）
         tags:
           - 會員等級
           - 自動扣繳
           - 電子帳單
+      # 官網:「大戶Plus加碼4%，上限NT$1,000/月帳單週期」
       - label: 大戶Plus
         bonus: 4
         limit: 1000
         limitUnit: 元
-        condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶Plus等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單（取消實體帳單）
         tags:
           - 會員等級
           - 自動扣繳
           - 電子帳單
+  # 官網:「悠遊卡自動加值：大戶3%(上限NT$100/月)、大戶Plus 5%(上限NT$500/月)，大大等級無優惠」
   - stores:
       - 悠遊卡自動加值
     region: domestic
     rate: 0
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 大大等級無優惠，需完成指定任務
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 大大等級無優惠，需完成指定任務（自動扣繳＋電子帳單）
     tiers:
       - label: 大戶
         bonus: 3
         limit: 100
         limitUnit: 元
-        condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單
         tags:
           - 會員等級
           - 自動扣繳
@@ -63,11 +76,26 @@ rewards:
         bonus: 5
         limit: 500
         limitUnit: 元
-        condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶Plus等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單
         tags:
           - 會員等級
           - 自動扣繳
           - 電子帳單
+  # 保費：依永豐一般消費定義，僅排除「富邦人壽(含原ING安泰)、三商美邦人壽、特定行銷專案」保費，
+  # 其餘保險公司保費屬一般消費 → 享基本1%；DAWHO活動辦法:「(任務加碼)不含保費代繳金額」→ 加碼不適用
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
+  - stores:
+      - 保費
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    maxTotalRate: 1
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 僅基本1%，大戶任務加碼不適用；富邦人壽（含原ING安泰）、三商美邦人壽及特定行銷專案保費無回饋
+
+  # 官網:「國外消費(限外幣)2%」「國外最高6%現金回饋」
   - stores:
       - "*"
     storeLabel: 海外全通路
@@ -75,15 +103,16 @@ rewards:
     rate: 2
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 不含結匯手續費、DCC、預借現金、賭場交易等
+    maxTotalRate: 6
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 不含結匯手續費、DCC動態外幣交易、預借現金、賭場交易、爭議款、帳務調整、各項手續費、國外刷新臺幣；加碼上限國內外合併計算
     tiers:
       - label: 大戶
         bonus: 2.5
         limit: 400
         limitUnit: 元
-        condition: 需大戶等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單（取消實體帳單）
         tags:
           - 會員等級
           - 自動扣繳
@@ -92,7 +121,7 @@ rewards:
         bonus: 4
         limit: 1000
         limitUnit: 元
-        condition: 需大戶Plus等級 + 永豐帳戶自動扣繳 + 電子帳單
+        condition: 需大戶Plus等級＋DAWHO帳戶自動扣繳卡款＋電子/行動帳單（取消實體帳單）
         tags:
           - 會員等級
           - 自動扣繳

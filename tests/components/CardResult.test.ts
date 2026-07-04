@@ -32,8 +32,9 @@ const makeResult = (overrides: Partial<SearchResult> = {}): SearchResult => ({
 			}
 		]
 	},
-	maxReward: 7,
+	rateRange: { min: 5, max: 7 },
 	isSpecificMatch: true,
+	matchKind: 'store',
 	...overrides
 });
 
@@ -44,14 +45,35 @@ describe('CardResult', () => {
 		expect(screen.getByText('Test Bank')).toBeInTheDocument();
 	});
 
-	it('displays max reward rate', () => {
+	it('displays reward range when floor differs from ceiling', () => {
 		render(CardResult, { props: { result: makeResult() } });
+		expect(screen.getByText('5% ~ 7%')).toBeInTheDocument();
+	});
+
+	it('displays single rate when floor equals ceiling', () => {
+		render(CardResult, {
+			props: { result: makeResult({ rateRange: { min: 7, max: 7 } }) }
+		});
 		expect(screen.getByText('7%')).toBeInTheDocument();
 	});
 
 	it('shows network badges', () => {
 		render(CardResult, { props: { result: makeResult() } });
 		expect(screen.getByText('Visa')).toBeInTheDocument();
+	});
+
+	it('shows points name badge for points cards', () => {
+		const result = makeResult();
+		result.card = { ...result.card, rewardType: '點數回饋', pointsName: '小樹點' };
+		render(CardResult, { props: { result } });
+		expect(screen.getByText('點數回饋（小樹點）')).toBeInTheDocument();
+	});
+
+	it('shows condition tag chips inside expanded tiers', async () => {
+		const user = userEvent.setup();
+		render(CardResult, { props: { result: makeResult() } });
+		await user.click(screen.getByText('加碼條件'));
+		expect(screen.getByText('指定通路')).toBeInTheDocument();
 	});
 
 	it('expand/collapse tiers', async () => {

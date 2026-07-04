@@ -23,6 +23,10 @@ data/                    # YAML 原始資料（一張卡一個檔案）
   cards/{id}.yaml        # 信用卡回饋規則
   stores/{name}.yaml     # 通路限制（如限定卡組織）
   aliases.yaml           # 通路別名對照表
+  categories.yaml        # 通路類別（從屬關係，非別名）
+.claude/skills/
+  add-card/              # /add-card 官方頁面→YAML 草稿管線
+  refresh-cards/         # /refresh-cards 資料保鮮巡檢
 scripts/
   build-data.ts          # YAML → JSON 建置管線
   migrate-data.ts        # 一次性資料遷移腳本
@@ -30,13 +34,14 @@ src/
   lib/
     types.ts             # 所有型別定義
     schema.ts            # Zod schema 驗證
-    data/                # 建置產生的 JSON（git-tracked）
+    data/                # 建置產生的 JSON（gitignored，由 build-data 產生）
       cards.json
       search-index.json
     engine/              # 搜尋引擎（純邏輯，無 UI 依賴）
       alias.ts           # 三層別名解析（exact→prefix→substring）
+      category.ts        # 類別倒排索引 + 通路展開
       filter.ts          # 卡組織/有效期/排除類別過濾
-      scoring.ts         # 回饋率計算
+      scoring.ts         # 回饋率區間計算（保底~最高）
       search.ts          # 四階段搜尋管線
       index.ts           # StoreIndex + PrefixIndex 建構
     stores/              # Svelte reactive stores
@@ -130,6 +135,16 @@ tests/
 - key 為主要名稱，value 為別名陣列
 - 新增通路時，加入常見的中英文別名、簡稱
 - 別名的 key 需與 `cards.json` 中 `stores` 使用的名稱一致
+- 別名是「同一實體的不同名稱」；從屬關係（台電屬於代繳）寫在
+  `categories.yaml`，兩者不可混用
+
+### 通路類別（`data/categories.yaml`）
+
+- key 為類別名稱（保費、代繳…），value 為成員通路陣列
+- 成員必須是 `aliases.yaml` 的 key（可搜尋的 canonical 名稱）
+- 卡片規則的 `stores` / `excludes` 可寫通路名或類別名
+- 搜尋時通路會展開為 {通路 ∪ 所屬類別} 做集合交集比對，
+  排除與匹配共用同一機制（搜「台電」會觸發 `excludes: [代繳]`）
 
 ### 通路限制（`data/stores/{name}.yaml`）
 
@@ -141,8 +156,11 @@ tests/
 
 ### 收錄範圍
 
-- 不收錄新戶優惠：新戶規定通常較繁雜且為一次性，僅處理一般持卡人可享有的常態或期間限定優惠
+- 收錄：常態權益＋銀行官方主檔活動（通常半年一期，必須填 validFrom/validUntil）
+- 不收錄：新戶/首刷優惠、單月或單一通路短期加碼、名額抽獎型活動
+- 點數回饋卡以銀行標示的名目回饋率收錄，`pointsName` 填點數名稱（如小樹點），不做點數折現
 - 精選通路、指定通路等加碼回饋，必須逐一列出具體適用通路名稱供確認，不可籠統帶過（攸關搜尋正確性）
+- 新增/更新資料優先使用 `/add-card`、`/refresh-cards` skills 產草稿，人工審查後才 commit
 
 ### 資料來源
 
@@ -166,6 +184,10 @@ tests/
 - 同一通路 + 同一地區不應出現重複的 reward 規則
 - `rate: 0` 允許（如悠遊卡自動加值無基本回饋，僅有 tier bonus）
 - `limit: 0` 代表無上限，非留空
+- `maxTotalRate` 直接抄官網「最高X%」宣稱值，禁止自行加總 tier 推導；
+  未填時引擎 fallback 為 rate + max(tier bonus)
+- rule 層級 `sourceUrl`：規則依據的活動頁與卡片頁不同時必填（供 /refresh-cards 重抓）
+- 卡片等級（世界卡/鈦金）回饋差異大時拆成獨立卡片檔，小差異寫 note
 
 ### 加碼回饋（RewardTier）
 
@@ -209,11 +231,13 @@ tests/
 
 - `pnpm dev` — 啟動開發伺服器
 - `pnpm build` — 建置生產版本（含 build-data）
-- `pnpm build-data` — YAML → JSON 建置管線
+- `pnpm build-data` — YAML → JSON 建置管線（含 freshness 警告：過期/30天內到期/180天未更新）
 - `pnpm validate-data` — 僅驗證資料格式（不產出 JSON）
 - `pnpm test` — 執行 Vitest 單元/元件測試
 - `pnpm test:e2e` — 執行 Playwright E2E 測試
 - `pnpm check` — 執行 svelte-check 型別檢查
+- `/add-card <官網URL>` — 從官方頁面草擬卡片 YAML（人工審查制）
+- `/refresh-cards [card id...]` — 巡檢過期/將到期/久未更新資料並草擬更新
 
 ## 文件同步規範
 
@@ -224,8 +248,16 @@ tests/
 ## 架構決策
 
 - 資料用 YAML 原始檔 + build-time JSON：每張卡一個 YAML 檔，建置時驗證並合併為 JSON
+- 三層準確性模型：通路可判定的（排除/類別回饋/指定通路）→ 結構化資料機器過濾；
+  使用者狀態的（等級/方案/登錄）→ 條件標籤展示（Phase 2 做 profile 收窄）；
+  交易當下才知道的（金額/上限/商場內店）→ 僅展示警語，永不機器求值
 - 搜尋引擎使用四階段管線：Retrieval → Hard Filter → Scoring → Ranking
 - 搜尋用三層 alias 解析：exact → prefix → substring（中文不做 fuzzy match）
+- 通路比對用 {通路 ∪ 所屬類別} 集合交集；exclude 與 reward 匹配共用同一展開機制
+- 回饋顯示為保底~最高區間（min = 規則無條件 rate，max = maxTotalRate 或 rate+最佳 tier）；
+  排序用區間上緣，同分時 exact-store 先於 category，再比下緣
+- 資料生產走 LLM 輔助管線（/add-card、/refresh-cards），build-time 抽取＋人工審查，
+  runtime 不用 LLM（成本/延遲/數字幻覺）
 - 搜尋結果分為兩層：「具體匹配」（stores 包含搜尋通路的規則）排前面，「一般回饋」（`stores: ["*"]` 萬用規則）排後面，中間以分隔線區分
 - 具體匹配的卡片若同時有萬用規則，以 `baseRule` 附帶顯示；`maxReward` 取兩者中較高的
 - 通路限制（store restrictions）在搜尋階段 hard filter 掉不符合的卡片

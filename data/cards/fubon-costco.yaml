@@ -4,30 +4,36 @@ bank: 富邦
 network: [mastercard]
 rewardType: 現金回饋
 sourceUrl: https://www.fubon.com/banking/Personal/credit_card/all_card/Costco/costco.htm
-updatedAt: "2026-03-07"
-note: 回饋為好多金，可折抵好市多消費或會費，每年3/31未使用歸零
+updatedAt: "2026-07-05"
+# 官網:「最高8%回饋」為世界卡＋滿額＋登錄組合；本檔以鈦金/鈦商卡為準，世界卡差異寫於各規則 note
+note: 回饋為好多金，可折抵好市多消費或會費，每年3/31未使用歸零；本檔回饋以鈦金/鈦商卡為準（世界卡部分活動較高）
 
 rewards:
-  # 好市多線上購物 3%
+  # 官網:「線上購物 3%好多金回饋無上限（2023/8/8～2027/12/31）」
   - stores: [好市多線上購物]
     region: domestic
     rate: 3
     limit: 0
     limitUnit: 元
+    validFrom: "2023-08-08"
+    validUntil: "2027-12-31"
 
-  # 好市多門市 2%
+  # 官網:「店內消費 2%好多金回饋無上限（2023/8/8～2027/12/31）」
   - stores: [好市多]
     region: domestic
     rate: 2
     limit: 0
     limitUnit: 元
+    validFrom: "2023-08-08"
+    validUntil: "2027-12-31"
 
-  # 好市多自助加油站 2% + 加碼1%
+  # 官網:「自助加油站最高3%（原權益2%+加碼1%，每期帳單加碼上限200元）」
   - stores: [好市多自助加油站]
     region: domestic
     rate: 2
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2023-08-08"
     validUntil: "2027-12-31"
     tiers:
@@ -36,145 +42,153 @@ rewards:
         limit: 200
         limitUnit: 元
         condition: 好市多自助加油站消費自動加碼，每期帳單上限200元
-        tags: [指定通路, 限期]
+        tags: [指定通路]
 
-  # UberEats好市多專區 1% + 加碼1%
+  # 官網:「UberEats好市多專區加碼1%（2026/7/1～12/31，每月無上限）」
   - stores: [UberEats好市多專區]
     region: domestic
     rate: 1
     limit: 0
     limitUnit: 元
-    validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    maxTotalRate: 2
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
     tiers:
       - label: UberEats加碼
         bonus: 1
         limit: 0
         limitUnit: 元
-        condition: UberEats好市多專區消費加碼，第三方支付不適用
+        condition: UberEats好市多專區消費加碼，每月無上限；使用第三方支付之交易不適用
         tags: [指定通路, 限期]
 
-  # 高鐵/臺鐵 1% + 加碼
+  # 活動辦法原文（使用者提供全文）:「活動期間內需於購票當月登錄」「本活動回饋時需為台北富邦銀行
+  # 帳戶自動扣繳本行信用卡費用戶，如中途取消...則不符合本活動資格」→ 自動扣繳是「參加資格」非加碼檔
+  # 「每戶每月擇優回饋，恕不重複累計」「鈦商卡及鈦金卡每戶每月加碼回饋上限450元、世界卡550元」
   - stores: [台灣高鐵, 台鐵]
     region: domestic
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 世界卡加碼上限550元/月，鈦金/鈦商卡450元/月
+    validUntil: "2026-12-31"
+    note: 本檔為鈦金/鈦商卡（最高3%），世界卡為滿6千3%/滿1.2萬4%（上限550元/月）；滿額兩檔擇優不重複；前月店外消費不含Costco自家消費（賣場/加油/線上/會費）及一般排除項目；高鐵限網站/APP/臨櫃/售票機（回數票、定期票續購、車廂升等、補票不計）；臺鐵同（悠遊卡自動加值、補票不計）
     tiers:
       - label: 前月消費滿6,000
         bonus: 1
         limit: 450
         limitUnit: 元
-        condition: 需登錄，前月店外消費滿6,000元（鈦金/鈦商卡），世界卡加碼2%
-        tags: [需登錄, 最低消費, 限期]
+        condition: 需購票當月登錄（網銀/行動銀行/語音專線）＋設定富邦帳戶自動扣繳卡費（活動資格，中途取消即喪失）＋前月店外消費滿6,000元，享2%（鈦金/鈦商卡）
+        tags: [需登錄, 最低消費, 自動扣繳]
       - label: 前月消費滿12,000
         bonus: 2
         limit: 450
         limitUnit: 元
-        condition: 需登錄，前月店外消費滿12,000元（鈦金/鈦商卡），世界卡加碼3%
-        tags: [需登錄, 最低消費, 限期]
-      - label: 自動扣繳加碼
-        bonus: 1
-        limit: 450
-        limitUnit: 元
-        condition: 使用台北富邦銀行帳戶自動扣繳卡費，可額外加碼
-        tags: [自動扣繳, 限期]
+        condition: 需購票當月登錄（網銀/行動銀行/語音專線）＋設定富邦帳戶自動扣繳卡費（活動資格，中途取消即喪失）＋前月店外消費滿12,000元，享3%（鈦金/鈦商卡）
+        tags: [需登錄, 最低消費, 自動扣繳]
 
-  # 精選海外旅遊 - 國外實體商店 1% + 加碼4%
+  # 精選海外旅遊 — 官網:「實體商店加碼4%（最高5%）；每月1日00:00開放登錄，限量5萬名；
+  # 每月每戶加碼上限600元好多金；活動期間2026/1/1~2026/12/31」
   - stores: ["*"]
     storeLabel: 國外實體商店
     region: international
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 5
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
-    note: 限國外實體商店，交易地點非台灣且幣別非新臺幣
+    validUntil: "2026-12-31"
+    note: 限國外實體商店；與其他海外精選類別共用每月600元加碼上限
     tiers:
       - label: 海外實體加碼
         bonus: 4
         limit: 600
         limitUnit: 元
-        condition: 需每月至Mastercard官網登錄，每月限5萬名，正附卡合併計算上限
+        condition: 需每月登錄（每月1日開放，限量5萬名），與其他海外類別共用600元上限
         tags: [需登錄, 限期]
 
-  # 精選海外旅遊 - 航空公司 1% + 加碼2%
+  # 官網:「航空公司（中華、長榮等）：2%加碼（最高3%）」
   - stores: [航空公司]
     region: international
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    validUntil: "2026-12-31"
     tiers:
       - label: 海外航空加碼
         bonus: 2
         limit: 600
         limitUnit: 元
-        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        condition: 需每月登錄（限量5萬名），與其他海外類別共用600元上限
         tags: [需登錄, 限期]
 
-  # 精選海外旅遊 - 旅行社 1% + 加碼2%
+  # 官網:「旅行社/訂房平台：2%加碼（最高3%）」
   - stores: [旅行社]
     region: international
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    validUntil: "2026-12-31"
     tiers:
       - label: 海外旅行社加碼
         bonus: 2
         limit: 600
         limitUnit: 元
-        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        condition: 需每月登錄（限量5萬名），與其他海外類別共用600元上限
         tags: [需登錄, 限期]
 
-  # 精選海外旅遊 - 訂房平台 1% + 加碼2%
   - stores: [Booking.com, Agoda, Trip.com, Hotels, Expedia]
     region: international
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    validUntil: "2026-12-31"
     tiers:
       - label: 海外訂房加碼
         bonus: 2
         limit: 600
         limitUnit: 元
-        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        condition: 需每月登錄（限量5萬名），與其他海外類別共用600元上限
         tags: [需登錄, 限期]
 
-  # 精選海外旅遊 - 免稅店 1% + 加碼2%
+  # 官網:「免稅店：2%加碼（最高3%）」
   - stores: [采盟免稅店, 昇恆昌免稅店]
     region: international
     rate: 1
     limit: 0
     limitUnit: 元
+    maxTotalRate: 3
     validFrom: "2026-01-01"
-    validUntil: "2026-06-30"
+    validUntil: "2026-12-31"
     tiers:
       - label: 免稅店加碼
         bonus: 2
         limit: 600
         limitUnit: 元
-        condition: 需每月至Mastercard官網登錄，每月限5萬名，與其他海外類別共用600元上限
+        condition: 需每月登錄（限量5萬名），與其他海外類別共用600元上限
         tags: [需登錄, 限期]
 
-  # 國內全通路 1%
+  # 官網排除全文:「保費、自動加值儲值金、基金申購及代扣、eToro等境外投資交易、預借現金、博奕類、
+  # 聯合信用卡中心小額支付平台特約商店、學雜費、公路監理資費、各項規費、各類稅款、各醫療院所費用、
+  # 醫指付、電子化繳稅費平台、公務機關信用卡繳費平台、各事業單位費用(水費、電費、瓦斯費、電信費、
+  # 路邊停車費)、便利商店消費(含綁定行動支付)、全聯實業旗下品牌通路(全聯、大全聯，含線上及PX Pay/
+  # 全支付)、循環息、分期利息、違約金、手續費」
   - stores: ["*"]
     storeLabel: 國內全通路
     region: domestic
     rate: 1
     limit: 0
     limitUnit: 元
-    excludes: [保費, 代繳]
+    excludes: [保費, 代繳, 便利商店, 全聯, 大全聯, 悠遊卡自動加值, 一卡通加值, icash加值]
+    note: 另不含基金申購及代扣、小額支付平台特店、學雜費、稅款、規費、醫療費用、繳費平台（醫指付等）、境外投資平台（eToro等）、博奕、預借現金、各項手續費；便利商店含綁定行動支付（icash Pay/全盈+Pay/LINE Pay）之消費
 
-  # 海外全通路 1%
+  # 官網:「國內/海外 1%好多金回饋無上限」
   - stores: ["*"]
     storeLabel: 海外全通路
     region: international

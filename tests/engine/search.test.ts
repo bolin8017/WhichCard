@@ -188,7 +188,7 @@ describe('searchCards', () => {
 		const results = engine.search({ query: 'momo', region: 'domestic' });
 		const ctbc = results.specificMatches.find((r) => r.card.id === 'ctbc-line-pay');
 		expect(ctbc).toBeDefined();
-		expect(ctbc!.maxReward).toBe(5); // rate 3 + tier bonus 2
+		expect(ctbc!.rateRange).toEqual({ min: 3, max: 5 }); // rate 3, +tier bonus 2
 	});
 
 	it('search momo: other cards in general matches via wildcard', () => {
@@ -215,11 +215,11 @@ describe('searchCards', () => {
 		expect(allCards.every((r) => r.card.id === 'ctbc-line-pay')).toBe(true);
 	});
 
-	it('results sorted by maxReward descending', () => {
+	it('results sorted by rate ceiling descending', () => {
 		const results = engine.search({ query: 'momo', region: 'domestic' });
 		for (const section of [results.specificMatches, results.generalMatches]) {
 			for (let i = 1; i < section.length; i++) {
-				expect(section[i - 1].maxReward).toBeGreaterThanOrEqual(section[i].maxReward);
+				expect(section[i - 1].rateRange.max).toBeGreaterThanOrEqual(section[i].rateRange.max);
 			}
 		}
 	});
@@ -248,5 +248,75 @@ describe('searchCards', () => {
 		const results = engine.search({ query: '好市多', region: 'domestic' });
 		expect(results.restriction).toBeDefined();
 		expect(results.restriction!.networks).toContain('mastercard');
+	});
+});
+
+describe('category expansion', () => {
+	const cards: CreditCard[] = [
+		{
+			id: 'excluder',
+			name: '排除卡',
+			bank: 'A銀行',
+			network: ['visa'],
+			rewardType: '現金回饋',
+			sourceUrl: 'https://example.com',
+			updatedAt: '2026-07-01',
+			rewards: [
+				{
+					stores: ['*'],
+					storeLabel: '國內全通路',
+					region: 'domestic',
+					rate: 1,
+					limit: 0,
+					limitUnit: '元',
+					excludes: ['保費', '代繳']
+				}
+			]
+		},
+		{
+			id: 'premium-card',
+			name: '保費卡',
+			bank: 'B銀行',
+			network: ['visa'],
+			rewardType: '現金回饋',
+			sourceUrl: 'https://example.com',
+			updatedAt: '2026-07-01',
+			rewards: [
+				{
+					stores: ['保費'],
+					region: 'domestic',
+					rate: 1.2,
+					limit: 0,
+					limitUnit: '元'
+				}
+			]
+		}
+	];
+	const aliases: Aliases = { 保費: ['保險費'], 代繳: [], 台電: ['台灣電力'], 國泰人壽: [] };
+	const categories = { 保費: ['國泰人壽'], 代繳: ['台電'] };
+	const catEngine = createSearchEngine(cards, aliases, {}, categories);
+
+	it('searching a category member fires the exclusion (台電 → 代繳)', () => {
+		const r = catEngine.search({ query: '台電', region: 'domestic' });
+		expect(r.generalMatches.map((m) => m.card.id)).not.toContain('excluder');
+	});
+
+	it('searching a member surfaces the category reward rule (國泰人壽 → 保費 1.2%)', () => {
+		const r = catEngine.search({ query: '國泰人壽', region: 'domestic' });
+		expect(r.specificMatches.map((m) => m.card.id)).toContain('premium-card');
+		expect(r.specificMatches[0].matchKind).toBe('category');
+		expect(r.generalMatches.map((m) => m.card.id)).not.toContain('excluder');
+	});
+
+	it('direct category search unchanged (保費)', () => {
+		const r = catEngine.search({ query: '保費', region: 'domestic' });
+		expect(r.specificMatches.map((m) => m.card.id)).toContain('premium-card');
+		expect(r.specificMatches[0].matchKind).toBe('store');
+	});
+
+	it('engine without categories behaves as before', () => {
+		const legacy = createSearchEngine(cards, aliases, {});
+		const r = legacy.search({ query: '台電', region: 'domestic' });
+		expect(r.generalMatches.map((m) => m.card.id)).toContain('excluder');
 	});
 });

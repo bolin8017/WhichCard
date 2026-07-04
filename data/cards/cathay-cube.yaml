@@ -1,0 +1,478 @@
+id: cathay-cube
+name: CUBE卡
+bank: 國泰世華
+network:
+  - visa
+rewardType: 點數回饋
+pointsName: 小樹點
+sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube
+updatedAt: "2026-07-05"
+# 官網:「小樹點1點等值NT$1」「每月指定消費累計以信用額度加計50萬元為限」
+# 官網:「各權益方案之指定消費皆已包含一般消費回饋0.3%」
+note: 小樹點1點=1元，入帳後次二日回饋；指定消費每月以信用額度+50萬內計算；權益方案每日可於CUBE App切換一次；特約商店分期僅0.3%、銀行端分期不回饋
+rewards:
+  # 官網:「一般消費0.3%」；排除清單依官網「指定消費與一般消費0.3%排除項目」全文
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    excludes:
+      - 代繳
+      - 便利商店
+      - 全聯
+      - 大全聯
+      - 悠遊卡自動加值
+      - 一卡通加值
+      - icash加值
+    note: 另不含稅款、學費、公用事業費、路邊停車費、繳費平台（醫指付/公務機關/CUBE App繳費等）、國壽躉繳/投資型/利變年金保費代繳、代扣基金、eTag儲值、小額支付平台特店（超商/速食/停車費）、SOGO貴賓廳、境外投資平台（eToro/Wise）、虛擬貨幣、博奕；超商與全聯僅「集精選/全支付」方案回饋
+
+  # 官網:「一般消費0.3%」（含海外，另有國外交易手續費不回饋）
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+
+  # 玩數位（2026/1/1~12/31）— 官網:「Level 1 2%、Level 2 3%、Level 3 3.3%」
+  - stores:
+      - ChatGPT
+      - Claude
+      - Canva
+      - Netflix
+      - Disney+
+      - Spotify
+      - Google Play
+      - 蝦皮
+      - momo
+      - PChome
+      - 小樹購
+      - Coupang
+      - 淘寶
+      - 天貓
+    storeLabel: 玩數位（指定數位通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 另含 Cursor、Apple 媒體服務等，以官網為準；限本卡直刷或綁定行動支付
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「玩數位」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「玩數位」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換「玩數位」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 樂饗購（2026/1/1~12/31）— 官網:「Level 1 2%、Level 2 3%、Level 3 3.3%」
+  - stores:
+      - 遠東SOGO
+      - 新光三越
+      - 台北101
+      - 誠品
+      - Uber Eats
+      - foodpanda
+      - 麥當勞
+      - 康是美
+      - 屈臣氏
+    storeLabel: 樂饗購（指定美食/購物）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 百貨逾40家、含聯合信用卡小額支付平台餐飲（此為方案豁免）；CUBE美食家加碼活動（2026/6/1~12/31，5~10%）未列入
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「樂饗購」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「樂饗購」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換「樂饗購」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 趣旅行（2026/1/1~12/31，國內可訂購通路）— 官網:「航空20+家、訂房平台、旅行社9家、國內外交通」
+  - stores:
+      - 台灣高鐵
+      - 中華航空
+      - 長榮航空
+      - 星宇航空
+      - 台灣虎航
+      - Agoda
+      - Airbnb
+      - Booking.com
+      - Trip.com
+      - KKDAY
+      - Klook
+      - 雄獅旅遊
+      - 可樂旅遊
+      - 東南旅遊
+      - 五福旅遊
+      - 東橫INN
+      - Uber
+      - 台灣大車隊
+      - iRent
+    storeLabel: 趣旅行（指定旅遊/交通）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 航空逾20家（含國泰航空/ANA）、旅行社9家、指定飯店，以官網為準
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「趣旅行」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「趣旅行」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換「趣旅行」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 趣旅行（海外實體消費）— 官網ⓘ:「指交易地點非台灣或交易幣別非台幣，使用實體信用卡過卡或感應式刷卡
+  # (含Apple Pay/Samsung Pay/Google Pay/Garmin Pay)，且須為面對面交易，交通卡儲值不列入計算」
+  # 官網ⓘ:「國外餐飲以MCC 5811/5812/5814認定」「排除：醫療事業、博奕類、飛機/郵輪上之消費、
+  # 境外投資交易平台(eToro等)、其他經本行公告排除項目(包括但不限於保費)」
+  - stores:
+      - "*"
+    storeLabel: 海外實體消費（趣旅行）
+    region: international
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.3
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 需切換至「趣旅行」；限面對面交易（實體卡或行動支付感應），不含海外網購；交通卡儲值不列入；排除醫療、博奕、飛機/郵輪上消費、境外投資平台、保費
+    tiers:
+      - label: Level 1
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「趣旅行」（核卡即享2%）
+        tags:
+          - 方案切換
+      - label: Level 2
+        bonus: 2.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「趣旅行」＋以CUBE App繳卡費或設定自動扣繳（次月升級3%）
+        tags:
+          - 方案切換
+          - 自動扣繳
+      - label: Level 3
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 切換「趣旅行」＋國泰世華財富管理貴賓（3.3%）
+        tags:
+          - 方案切換
+          - 會員等級
+
+  # 集精選（2026/1/1~12/31）— 官網:「2%」各等級不分級
+  - stores:
+      - 家樂福
+      - LOPIA
+      - 台灣中油
+      - IKEA
+      - 車麻吉
+      - uTagGo
+      - U-POWER
+    storeLabel: 集精選（指定生活通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 另含指定充電樁業者（EVOAS/EV VALUE等），以官網為準；台灣中油限直營站
+    tiers:
+      - label: 集精選
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「集精選」（各等級均2%）
+        tags:
+          - 方案切換
+
+  # 集精選之超商/全聯 carve-out — 官網注意事項14:「限選定『集精選』方案方可獲指定消費回饋，
+  # 選定其他方案則不予回饋」（一般回饋0.3%亦排除超商/全聯，故無方案時保底為0）
+  - stores:
+      - 7-ELEVEN
+      - 全家
+      - 全聯
+    storeLabel: 集精選（超商/全聯）
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 未選「集精選」時無任何回饋（一般回饋亦排除超商/全聯）；排除菸酒、代收代售、禮券；全聯限實體門市，不含大全聯
+    tiers:
+      - label: 集精選
+        bonus: 2
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「集精選」（各等級均2%）
+        tags:
+          - 方案切換
+
+  # 台塑家（2026/6/1~12/31）— 官網:「2%」；不適用Level分級（使用者核對確認），固定2%
+  - stores:
+      - 台塑石油
+      - 台亞
+      - 台塑生醫
+      - 長庚生技
+      - 台塑購物網
+    storeLabel: 台塑家（台塑集團通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-06-01"
+    validUntil: "2026-12-31"
+    note: 另含福懋、統一速邁樂加油站，以官網為準
+    tiers:
+      - label: 台塑家
+        bonus: 1.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「台塑家」
+        tags:
+          - 方案切換
+
+  # 台塑家之指定超商 carve-out — 官網方案頁「指定超商：7-ELEVEN實體門市、全家便利商店實體門市、
+  # 萊爾富實體門市」（一般回饋0.3%排除超商，故無方案時保底為0）
+  - stores:
+      - 7-ELEVEN
+      - 全家
+      - 萊爾富
+    storeLabel: 台塑家（指定超商）
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-06-01"
+    validUntil: "2026-12-31"
+    note: 限實體門市；7-ELEVEN/全家於「集精選」方案亦有2%（萊爾富僅台塑家）；未選方案時超商無回饋
+    tiers:
+      - label: 台塑家
+        bonus: 2
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「台塑家」
+        tags:
+          - 方案切換
+
+  # 全支付（2026/4/22~12/31）— 官網:「2%」；不適用Level分級，固定2%（使用者核對確認）
+  # 全聯/大全聯為本方案指定通路（一般回饋原排除，此為方案豁免）；須透過全支付App支付（使用者核對確認）
+  - stores:
+      - 全聯
+      - 大全聯
+    storeLabel: 全支付（量販超市）
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 2
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-04-22"
+    validUntil: "2026-12-31"
+    note: 未選「全支付」方案時超市消費無回饋；限透過全支付App綁定本卡支付；另含全支付國內合作通路
+    tiers:
+      - label: 全支付
+        bonus: 2
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「全支付」，並透過全支付App綁定本卡支付
+        tags:
+          - 方案切換
+          - 行動支付
+
+  # 慶生月（2026/7/1~9/30）— 官網:「KTV/台中特選餐廳/日本遊樂園10%；新光三越/Uber Eats/Klook/FunNow 3.5%」
+  # 限持卡人生日當月適用（使用者核對確認）
+  - stores:
+      - 錢櫃
+      - 好樂迪
+      - 星聚點
+    storeLabel: 慶生月（KTV等10%通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 10
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-07-01"
+    validUntil: "2026-09-30"
+    note: 另含台中特選餐廳、日本遊樂園/遊戲平台等10%通路，以官網為準
+    tiers:
+      - label: 慶生月
+        bonus: 9.7
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「慶生月」，限持卡人生日當月（活動2026/7/1~9/30）
+        tags:
+          - 方案切換
+          - 限期
+  - stores:
+      - FunNow
+    storeLabel: 慶生月（3.5%通路）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 3.5
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-07-01"
+    validUntil: "2026-09-30"
+    note: 3.5%通路另含新光三越、Uber Eats、Klook（該三者於樂饗購/趣旅行亦有回饋，擇優顯示）
+    tiers:
+      - label: 慶生月
+        bonus: 3.2
+        limit: 0
+        limitUnit: 點
+        condition: 於CUBE App將權益方案切換至「慶生月」，限持卡人生日當月（活動2026/7/1~9/30）
+        tags:
+          - 方案切換
+          - 限期
+
+  # 童樂匯（2026/7/1~12/31）— 官網:「解鎖條件：客戶與未成年子女需持有本行帳戶且持有效CUBE卡」
+  - stores:
+      - 保費
+    storeLabel: 童樂匯（壽險/產險保費）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 1
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 私校學費（經i繳費平台）亦享1%；需符合親子解鎖條件
+    tiers:
+      - label: 童樂匯
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「童樂匯」＋與未成年子女同持本行帳戶（解鎖）
+        tags:
+          - 方案切換
+          - 會員等級
+  - stores:
+      - 台灣壽司郎
+      - 陶板屋
+      - 麗寶樂園
+    storeLabel: 童樂匯（親子餐廳/育樂5%）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 另含YAYOI、Klook、迪士尼/環球影城、親子飯店12家、母嬰用品店等，以官網為準
+    tiers:
+      - label: 童樂匯
+        bonus: 4.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「童樂匯」＋與未成年子女同持本行帳戶（解鎖）
+        tags:
+          - 方案切換
+          - 會員等級
+  - stores:
+      - 朱宗慶打擊樂
+      - 雲門舞集
+      - Yamaha音樂教室
+    storeLabel: 童樂匯（五感課程10%）
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 10
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/cube-list
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 另含嬰幼童品牌官網（10mois等），以官網為準
+    tiers:
+      - label: 童樂匯
+        bonus: 9.7
+        limit: 0
+        limitUnit: 點
+        condition: 切換「童樂匯」＋與未成年子女同持本行帳戶（解鎖）
+        tags:
+          - 方案切換
+          - 會員等級
