@@ -136,6 +136,11 @@ function crossValidate(
 		restrictionMap.set(store.name, store.restrictions);
 	}
 
+	const DAY_MS = 86_400_000;
+	const todayStr = new Date().toISOString().slice(0, 10);
+	const soonStr = new Date(Date.now() + 30 * DAY_MS).toISOString().slice(0, 10);
+	const staleStr = new Date(Date.now() - 180 * DAY_MS).toISOString().slice(0, 10);
+
 	const aliasKeys = new Set(Object.keys(aliases));
 	const resolvable = new Set([...aliasKeys, ...Object.keys(categories)]);
 
@@ -180,10 +185,16 @@ function crossValidate(
 				}
 			}
 
-			// Warn on expired rules
-			if (rule.validUntil && rule.validUntil < new Date().toISOString().slice(0, 10)) {
-				warn(`${card.id}: rule for [${rule.stores.join(',')}] expired on ${rule.validUntil}`);
+			// Freshness: expired rules must be deleted (policy); expiring soon needs a refresh
+			if (rule.validUntil && rule.validUntil < todayStr) {
+				warn(`${card.id}: rule for [${rule.stores.join(',')}] expired on ${rule.validUntil} — delete it (policy) or run /refresh-cards`);
+			} else if (rule.validUntil && rule.validUntil <= soonStr) {
+				warn(`${card.id}: rule for [${rule.stores.join(',')}] expires soon (${rule.validUntil})`);
 			}
+		}
+
+		if (card.updatedAt < staleStr) {
+			warn(`${card.id}: updatedAt ${card.updatedAt} older than 180 days — verify against ${card.sourceUrl}`);
 		}
 	}
 
