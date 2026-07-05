@@ -1,0 +1,8 @@
+# 官方FAQ（2026-07-05確認）: https://www.costco.com.tw/CustomerServiceFAQOnline2
+# 「本網站目前可接受COSTCO富邦聯名信用卡、加拿大/中國VISA/日本/韓國/墨西哥/美國之
+#  COSTCO聯名信用卡進行線上付款，無法使用網路ATM。」
+# 台灣發行卡僅富邦Costco聯名卡可用
+name: 好市多線上購物
+restrictions:
+  cards: [fubon-costco]
+note: 線上購物僅接受Costco聯名卡（台灣為富邦Costco聯名卡）

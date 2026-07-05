@@ -1,0 +1,8 @@
+# 官方FAQ（2026-07-05確認）: https://www.costco.com.tw/content/gasstationfaq
+# 「好市多加油站為全面自助式加油，接受現金儲值卡以及各地區發行之Costco聯名信用卡，
+#  來支付相關油品費用。」「好市多加油站不接受現金或支票」
+# 台灣發行卡僅富邦Costco聯名卡可用
+name: 好市多自助加油站
+restrictions:
+  cards: [fubon-costco]
+note: 加油站僅接受Costco聯名卡或好市多現金儲值卡，不收現金
