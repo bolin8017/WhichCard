@@ -1,0 +1,222 @@
+id: sinopac-sport
+name: SPORT卡
+bank: 永豐銀行
+# TODO-REVIEW: 卡組織依卡面圖判讀為 mastercard（頁面文字未明示），請核對官網卡面
+network:
+  - mastercard
+rewardType: 點數回饋
+pointsName: 豐點
+sourceUrl: https://bank.sinopac.com/sinopacBT/personal/credit-card/introduction/bankcard/sportcard.html
+updatedAt: "2026-07-05"
+# 官網:「一般消費最高享2%豐點，指定支付/通路享最高5%豐點」活動期間2026/7/1-12/31
+note: 豐點1點=1元，於大咖DACARD APP設定後自動折抵帳單（每100豐點折100元），未設定則轉紅利點數（1豐點=20紅利）；所有加碼需下載註冊大咖DACARD APP並串接運動數據（每10天開啟更新）；已分期交易不回饋
+rewards:
+  # 官網:「國內外一般消費基本回饋電子化帳單加碼0.7%...方可符合最高1%回饋資格，否則僅享0.3%」
+  # 「運動獎勵...需於消費當月達10,000大卡或Apple Watch圓滿畫圈10次，並...自動扣繳」
+  # 行動支付:「一般消費綁定Apple Pay/Google Pay/Samsung Pay/Garmin Pay支付」加碼→最高5%
+  # 排除依永豐一般消費定義公告:
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    excludes:
+      - 保費
+      - 代繳
+      - 全聯
+      - 大全聯
+      - 便利商店
+      - 悠遊卡自動加值
+      - 一卡通加值
+    # TODO-REVIEW: 排除清單依永豐一般消費定義推定（活動注意事項另提保費代繳不回饋），請核對「注意事項」彈窗
+    note: 一般消費最高2%（0.3%＋電子化帳單0.7%＋運動獎勵1%）；綁定指定行動支付再加碼3%達最高5%
+    tiers:
+      - label: 電子化帳單
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 當月帳單結帳日前完成電子或行動帳單設定
+        tags:
+          - 電子帳單
+      - label: 運動獎勵
+        bonus: 1
+        limit: 0
+        limitUnit: 點
+        condition: 註冊大咖DACARD APP串接運動數據＋當月達10,000大卡或Apple Watch圓滿畫圈10次＋永豐/京城帳戶自動扣繳
+        tags:
+          - 自動扣繳
+      - label: 行動支付加碼
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 一般消費綁定Apple Pay/Google Pay/Samsung Pay/Garmin Pay支付＋運動數據串接＋當月達卡路里門檻＋自動扣繳
+        tags:
+          - 行動支付
+          - 自動扣繳
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 國內外一般消費同回饋結構
+    tiers:
+      - label: 電子化帳單
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 當月帳單結帳日前完成電子或行動帳單設定
+        tags:
+          - 電子帳單
+      - label: 運動獎勵
+        bonus: 1
+        limit: 0
+        limitUnit: 點
+        condition: 註冊大咖DACARD APP串接運動數據＋當月達10,000大卡或Apple Watch圓滿畫圈10次＋永豐/京城帳戶自動扣繳
+        tags:
+          - 自動扣繳
+      - label: 行動支付加碼
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 一般消費綁定Apple Pay/Google Pay/Samsung Pay/Garmin Pay支付＋運動數據串接＋當月達卡路里門檻＋自動扣繳
+        tags:
+          - 行動支付
+          - 自動扣繳
+  # 官網指定通路-運動健身:「World Gym、健身工廠、Curves、喬山健康科技(限街邊實體門市)、
+  # Welltivity數位大健康生活平台、台北市運動中心、新北市運動中心、Nuli女力APP(限官網刷卡訂閱)、
+  # 摩曼頓、Anytime Fitness、超核心健身中心、DAZN」
+  - stores:
+      - World Gym
+      - 健身工廠
+      - Curves
+      - 喬山健康科技
+      - Welltivity
+      - 台北市運動中心
+      - 新北市運動中心
+      - Nuli女力
+      - 摩曼頓
+      - Anytime Fitness
+      - 超核心健身中心
+      - DAZN
+    storeLabel: 指定運動健身通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 喬山限街邊實體門市；Nuli限官網刷卡訂閱
+    tiers:
+      - label: 電子化帳單
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 當月帳單結帳日前完成電子或行動帳單設定
+        tags:
+          - 電子帳單
+      - label: 運動獎勵
+        bonus: 1
+        limit: 0
+        limitUnit: 點
+        condition: 註冊大咖DACARD APP串接運動數據＋當月達10,000大卡或Apple Watch圓滿畫圈10次＋永豐/京城帳戶自動扣繳
+        tags:
+          - 自動扣繳
+      - label: 指定通路加碼
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 大咖DACARD APP串接運動數據＋當月達卡路里門檻＋永豐/京城帳戶自動扣繳
+        tags:
+          - 指定通路
+          - 自動扣繳
+  # 官網指定通路-醫藥保健:「屈臣氏、康是美、寶雅、好心肝健檢中心、杏一藥局、大樹藥局、丁丁藥局、新高橋藥局」
+  - stores:
+      - 屈臣氏
+      - 康是美
+      - 寶雅
+      - 好心肝健檢中心
+      - 杏一藥局
+      - 大樹藥局
+      - 丁丁藥局
+      - 新高橋藥局
+    storeLabel: 指定醫藥保健通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    tiers:
+      - label: 電子化帳單
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 當月帳單結帳日前完成電子或行動帳單設定
+        tags:
+          - 電子帳單
+      - label: 運動獎勵
+        bonus: 1
+        limit: 0
+        limitUnit: 點
+        condition: 註冊大咖DACARD APP串接運動數據＋當月達10,000大卡或Apple Watch圓滿畫圈10次＋永豐/京城帳戶自動扣繳
+        tags:
+          - 自動扣繳
+      - label: 指定通路加碼
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 大咖DACARD APP串接運動數據＋當月達卡路里門檻＋永豐/京城帳戶自動扣繳
+        tags:
+          - 指定通路
+          - 自動扣繳
+  # 官網指定通路-電競娛樂:「APP Store、Google Play商店應用程式、Nintendo、PlayStation、Steam」
+  - stores:
+      - App Store
+      - Google Play
+      - Nintendo
+      - PlayStation
+      - Steam
+    storeLabel: 指定電競娛樂通路
+    region: domestic
+    rate: 0.3
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    tiers:
+      - label: 電子化帳單
+        bonus: 0.7
+        limit: 0
+        limitUnit: 點
+        condition: 當月帳單結帳日前完成電子或行動帳單設定
+        tags:
+          - 電子帳單
+      - label: 運動獎勵
+        bonus: 1
+        limit: 0
+        limitUnit: 點
+        condition: 註冊大咖DACARD APP串接運動數據＋當月達10,000大卡或Apple Watch圓滿畫圈10次＋永豐/京城帳戶自動扣繳
+        tags:
+          - 自動扣繳
+      - label: 指定通路加碼
+        bonus: 3
+        limit: 0
+        limitUnit: 點
+        condition: 大咖DACARD APP串接運動數據＋當月達卡路里門檻＋永豐/京城帳戶自動扣繳
+        tags:
+          - 指定通路
+          - 自動扣繳
