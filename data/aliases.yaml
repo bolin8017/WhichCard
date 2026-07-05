@@ -71,6 +71,7 @@ Amazon:
 Rakuten:
   - 樂天
   - 樂天市場
+  - 台灣樂天
 eBay: []
 淘寶:
   - Taobao
@@ -249,8 +250,9 @@ FunNow: []
 台塑生醫: []
 長庚生技: []
 台塑購物網: []
-台灣壽司郎:
-  - 壽司郎
+# 台日共用品牌：CUBE 童樂匯（國內）與熊本熊卡（日本）以 region 區分
+壽司郎:
+  - 台灣壽司郎
   - Sushiro
 陶板屋: []
 麗寶樂園:
@@ -262,3 +264,153 @@ FunNow: []
 Yamaha音樂教室:
   - Yamaha
   - 山葉音樂
+
+# --- 蝦皮聯名卡 指定外送/交通/旅遊 ---
+LINE GO:
+  - LINEGO
+  - LineGo
+亞洲航空:
+  - AirAsia
+國泰航空:
+  - Cathay Pacific
+易遊網:
+  - ezTravel
+  - 易遊網eztravel
+山富旅遊:
+  - 山富
+鳳凰旅遊:
+  - 鳳凰旅行社
+# --- 永豐DAWAY卡 ---
+路易莎咖啡:
+  - Louisa
+  - 路易莎
+# --- 永豐現金回饋JCB卡 特選通路 ---
+東森購物:
+  - ETMall
+YAHOO奇摩購物中心:
+  - Yahoo購物中心
+  - 奇摩購物
+friDay購物:
+  - friday購物
+生活市集: []
+漢神巨蛋: []
+漢神百貨:
+  - 漢神
+遠東百貨:
+  - 遠百
+全支付: []
+# --- 永豐SPORT卡 指定通路 ---
+World Gym: []
+健身工廠:
+  - Fitness Factory
+Curves:
+  - 可爾姿
+喬山健康科技:
+  - 喬山
+Welltivity: []
+台北市運動中心: []
+新北市運動中心: []
+Nuli女力:
+  - Nuli
+摩曼頓: []
+Anytime Fitness: []
+超核心健身中心:
+  - 超核心
+DAZN: []
+寶雅:
+  - POYA
+好心肝健檢中心:
+  - 好心肝
+杏一藥局:
+  - 杏一
+大樹藥局:
+  - 大樹
+丁丁藥局:
+  - 丁丁
+新高橋藥局:
+  - 新高橋
+App Store:
+  - AppStore
+Nintendo:
+  - 任天堂
+PlayStation:
+  - PS Store
+Steam: []
+# --- 玉山熊本熊卡 指定日本商店 ---
+PayPay: []
+TOYOTA租車:
+  - TOYOTA Rent a Car
+Times租車:
+  - Times Car Rental
+NIPPON租車:
+  - NIPPON RENT-A-CAR
+OTS租車:
+  - OTS
+ORIX租車:
+  - ORIX
+Budget租車:
+  - Budget Rent a Car
+JR鐵路:
+  - JR
+日本航空:
+  - JAL
+樂天旅遊:
+  - Rakuten Travel
+星野集團:
+  - 星野
+王子大飯店:
+  - Prince Hotel
+BicCamera: []
+Yodobashi:
+  - 友都八喜
+松本清: []
+唐吉軻德:
+  - 唐吉訶德
+  - 驚安的殿堂
+  - Don Quijote
+無印良品:
+  - MUJI
+三井購物園區:
+  - 日本MITSUI
+  - MITSUI OUTLET PARK
+LaLaport:
+  - LaLaport購物園區
+UNIQLO:
+  - 優衣庫
+GU: []
+Montbell: []
+Alpen: []
+勝烈亭: []
+敘敘苑: []
+牛角: []
+力丸燒肉:
+  - 力丸
+六歌仙燒肉:
+  - 六歌仙
+Shake Shack: []
+DOUTOR:
+  - 羅多倫
+Fuglen: []
+鳥貴族: []
+一蘭拉麵:
+  - 一蘭
+松屋: []
+SUKIYA:
+  - すき家
+藏壽司:
+  - Kura Sushi
+人形町今半:
+  - 今半
+東京迪士尼樂園:
+  - 東京迪士尼
+哈利波特影城:
+  - 東京華納兄弟哈利波特影城
+日本環球影城:
+  - 環球影城
+  - USJ
+豪斯登堡: []
+九州非洲獅樂園: []
+名古屋樂高樂園:
+  - 樂高樂園
+吉伊卡哇樂園:
+  - Chiikawa樂園
