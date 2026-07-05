@@ -1,0 +1,126 @@
+id: esun-kumamon
+name: 熊本熊卡
+bank: 玉山
+network:
+  - jcb
+rewardType: 現金回饋
+sourceUrl: https://www.esunbank.com/zh-tw/personal/credit-card/intro/bank-card/kumamon_card
+updatedAt: "2026-07-05"
+# JCB晶緻卡；含一般卡2款與日圓雙幣卡2款（雙幣卡國外消費一律以日圓繳款，需開立玉山臺外幣帳戶）
+note: 含一般卡與日圓雙幣卡（雙幣卡國外消費以日圓繳款）；正卡年費3,000首年免，次年帳單e化＋自動扣繳或任刷一筆免年費；日本消費需收1.5%國外交易服務費（PayPay除外）
+rewards:
+  # 官網:「國內一般消費享0.5%現金回饋 回饋無上限，於當期帳單直接折抵 需綁定帳單e化與申請玉山帳戶自動扣繳卡費」
+  # 活動期間 2026/7/1~12/31
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0
+    limit: 0
+    limitUnit: 元
+    maxTotalRate: 0.5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    # TODO-REVIEW: 玉山未在本頁列出排除清單，僅「分期付款、預借現金、代償、代收費用、
+    # 各項作業手續費...非一般消費項目」；一般消費定義細節請核對頁面「注意事項」彈窗
+    note: 未綁定帳單e化＋玉山帳戶自動扣繳者無國內回饋；分期、預借現金、代收費用等非一般消費不回饋
+    tiers:
+      - label: 綁定回饋
+        bonus: 0.5
+        limit: 0
+        limitUnit: 元
+        condition: 綁定帳單e化＋申請玉山帳戶自動扣繳卡費（回饋無上限，當期帳單直接折抵）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 官網:「日本一般消費享2.5%現金回饋(回饋無上限)」「需收取1.5%國外交易服務費」
+  - stores:
+      - "*"
+    storeLabel: 日本一般消費
+    region: japan
+    rate: 2.5
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 回饋無上限；需收取1.5%國外交易服務費
+  # 官網:「指定日本商店消費最高享8.5%現金回饋 含日本一般消費2.5%+指定日本商店加碼6%
+  # 加碼6%每歸戶每期回饋上限500元 活動需登錄且活動期間內僅需登錄1次」
+  - stores:
+      - SUICA儲值
+      - PASMO儲值
+      - ICOCA儲值
+      - TOYOTA租車
+      - Times租車
+      - NIPPON租車
+      - OTS租車
+      - ORIX租車
+      - Budget租車
+      - JR鐵路
+      - 日本航空
+      - 樂天旅遊
+      - 東橫INN
+      - 星野集團
+      - 王子大飯店
+      - BicCamera
+      - Yodobashi
+      - 松本清
+      - 唐吉軻德
+      - 大國藥妝
+      - 無印良品
+      - 三井購物園區
+      - LaLaport
+      - UNIQLO
+      - GU
+      - Montbell
+      - Alpen
+      - 勝烈亭
+      - 敘敘苑
+      - 牛角
+      - 力丸燒肉
+      - 六歌仙燒肉
+      - Shake Shack
+      - DOUTOR
+      - Fuglen
+      - 鳥貴族
+      - 一蘭拉麵
+      - 松屋
+      - SUKIYA
+      - 壽司郎
+      - 藏壽司
+      - 人形町今半
+      - 東京迪士尼樂園
+      - 哈利波特影城
+      - 日本環球影城
+      - 豪斯登堡
+      - 九州非洲獅樂園
+      - 名古屋樂高樂園
+      - 吉伊卡哇樂園
+    storeLabel: 指定日本商店（熊好遊/買/吃/玩）
+    region: japan
+    rate: 2.5
+    limit: 0
+    limitUnit: 元
+    maxTotalRate: 8.5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 商店若設立於百貨/車站/美食街致帳單名稱無法判別者不列入回饋；需收1.5%國外交易服務費
+    tiers:
+      - label: 指定商店加碼
+        bonus: 6
+        limit: 500
+        limitUnit: 元
+        condition: 需登錄（活動期間內僅需登錄1次），加碼每歸戶每期帳單上限500元
+        tags:
+          - 需登錄
+  # 官網:「綁定玉山Wallet電子支付於日本PayPay消費，最高享5%優惠 含日本PayPay消費3.5%+免收1.5%國外交易服務費
+  # 3.5%每歸戶每季回饋上限100元」活動期間 2026/1/1~12/31
+  - stores:
+      - PayPay
+    region: japan
+    rate: 3.5
+    limit: 100
+    limitUnit: 元
+    validFrom: "2026-01-01"
+    validUntil: "2026-12-31"
+    note: 需以本卡綁定玉山Wallet電子支付；免收1.5%國外交易服務費（官網宣稱最高5%＝3.5%＋免手續費1.5%）；每歸戶每季回饋上限100元；以新臺幣扣款
