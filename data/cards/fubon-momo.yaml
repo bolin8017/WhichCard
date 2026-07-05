@@ -1,0 +1,74 @@
+id: fubon-momo
+name: momo卡
+bank: 富邦
+network: [mastercard]
+rewardType: 現金回饋
+sourceUrl: https://www.fubon.com/banking/Personal/credit_card/all_card/momo/momo.htm
+updatedAt: "2026-07-05"
+# 2026/4/1起店外消費由mo幣改為現金回饋（官方公告），店內維持mo幣
+note: momo通路回饋為mo幣（1點=1元，可於momo折抵或外部合作通路兌用）；店外及保費為現金回饋，自動折抵次6期帳單；2026/7/14起更換新卡面
+rewards:
+  # 官網:「momo通路消費享最高3% mo幣回饋...歸戶每期帳單回饋上限1,000 mo幣」
+  # TODO-REVIEW: 「最高3%」判讀為固定3%受上限1,000 mo幣限制；分級結構（若有）寫於
+  # 官網「注意事項第2點」彈窗，請點開核對 https://www.fubon.com/banking/Personal/credit_card/all_card/momo/momo.htm
+  - stores:
+      - momo
+    region: domestic
+    rate: 3
+    limit: 1000
+    limitUnit: 點
+    validFrom: "2026-04-01"
+    validUntil: "2026-12-31"
+    note: momo通路含購物網/電視購物/型錄/mo店+/跨境電商（特殊商品除外）；回饋為mo幣，正附卡合併歸戶每期上限1,000點；momo旅遊（富昇旅行社）僅適用一般消費1%現金；分期訂單不回饋
+  # 官網:「一般消費享1%現金回饋無上限」；排除:「便利商店消費(含綁定該便利商店各行動支付)、
+  # 全聯實業旗下品牌通路、台灣Costco消費、指定網路平台(YouTube、Spotify、TikTok、Apple媒體
+  # 服務、Google產品或服務含Google Play等)、歐洲經濟區實體商店、保費、稅款規費、博奕」
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-04-01"
+    validUntil: "2026-12-31"
+    excludes:
+      - momo
+      - 便利商店
+      - 全聯
+      - 大全聯
+      - 好市多
+      - 好市多線上購物
+      - 好市多自助加油站
+      - 保費
+      - Spotify
+      - Google Play
+      - 代繳
+      - 悠遊卡自動加值
+      - 一卡通加值
+      - icash加值
+    # momo 排除係店內外互斥（momo通路消費適用店內mo幣規則，非「店外一般消費」）
+    # TODO-REVIEW: 代繳/自動加值儲值金依富邦標準排除清單（同fubon-costco「各事業單位費用、
+    # 自動加值儲值金」）推定，官網「注意事項」彈窗全文請核對
+    note: 另不含YouTube/TikTok/Apple媒體服務等指定網路平台、各項稅款及規費、預借現金、博奕、各項手續費；便利商店含綁定行動支付之消費
+  # 官網:「海外消費享1%現金回饋無上限」；排除「歐洲經濟區實體商店」
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-04-01"
+    validUntil: "2026-12-31"
+    note: 歐洲經濟區實體商店消費不回饋
+  # 官網:「持momo卡刷保費，依設定享0.5%現金回饋或分期0利率優惠二選一」
+  - stores:
+      - 保費
+    region: domestic
+    rate: 0.5
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-04-01"
+    validUntil: "2026-12-31"
+    note: 與保費分期0利率（不限金額3/6期，單筆滿5萬9/12期）二選一，未設定預設為0.5%現金回饋

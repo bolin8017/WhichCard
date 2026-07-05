@@ -1,0 +1,195 @@
+id: sinopac-cashback-jcb
+name: 永豐現金回饋JCB卡
+bank: 永豐銀行
+network:
+  - jcb
+rewardType: 現金回饋
+sourceUrl: https://bank.sinopac.com/sinopacbt/personal/credit-card/introduction/bankcard/cashcardJCB.html
+updatedAt: "2026-07-05"
+note: 已分期之交易不享回饋；特選通路加碼與新戶活動（全支付-全聯3%、首刷禮）依政策僅收錄常態向權益
+rewards:
+  # 官網:「刷永豐現金回饋JCB卡新增一般消費享國內1%現金回饋」活動期間2026/7/1~12/31
+  # 排除依永豐信用卡一般消費定義公告:
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    excludes:
+      - 保費
+      - 代繳
+      - 全聯
+      - 大全聯
+      - 便利商店
+      - 悠遊卡自動加值
+      - 一卡通加值
+    note: 依永豐一般消費定義，另不含繳費平台、超商APP、小額支付平台、eTag儲值、代扣基金、稅款/學費/醫療/規費、境外投資平台
+  # 官網:「國外2%現金回饋」
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+  # 官網:「日韓泰消費滿額加碼5%：每季於日本/韓國/泰國實體消費累計刷卡滿新臺幣20,000元，
+  # 享5%刷卡金回饋（每卡戶每季回饋上限1,000元，需登錄，每季限量5,000名）」
+  # TODO-REVIEW: 「享5%刷卡金回饋」判讀為加碼5%（與國外基本2%並行）；官網未明示總回饋率，請確認
+  - stores:
+      - "*"
+    storeLabel: 日韓泰實體消費
+    region: international
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 限交易商店國別為日本/韓國/泰國且交易幣別非新臺幣之實體一般消費；2026第三季名額已於7/2額滿
+    tiers:
+      - label: 日韓泰滿額加碼
+        bonus: 5
+        limit: 1000
+        limitUnit: 元
+        condition: 每季日韓泰實體消費累計滿20,000元＋需登錄（每季限量5,000名），每卡戶每季上限1,000元
+        tags:
+          - 需登錄
+          - 最低消費
+          - 限期
+  # 官網:「特選通路消費享最高5%現金回饋（含一般消費基本回饋國內1%、國外2%，特選通路加碼3%...
+  # 每卡戶每期帳單回饋上限300元）任務A：電子或行動帳單 任務B：永豐/京城帳戶自動扣繳」
+  # 特選-日本:「限交易地為日本，且交易幣別為日幣之一般消費」
+  - stores:
+      - "*"
+    storeLabel: 日本消費
+    region: japan
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    maxTotalRate: 5
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 限交易地日本且日幣之一般消費；日韓泰季滿2萬另有加碼5%活動（見海外規則）
+    tiers:
+      - label: 特選通路加碼
+        bonus: 3
+        limit: 300
+        limitUnit: 元
+        condition: 電子/行動帳單＋永豐/京城帳戶自動扣繳（雙任務），每卡戶每期上限300元（各特選通路合併計算）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 特選-網購:「蝦皮購物、momo購物網、PChome線上購物、淘寶、東森購物、YAHOO奇摩購物中心、
+  # friDay購物、台灣樂天、生活市集、Amazon、Coupang酷澎」（淘寶另列國外規則）
+  - stores:
+      - 蝦皮
+      - momo
+      - PChome
+      - 東森購物
+      - YAHOO奇摩購物中心
+      - friDay購物
+      - Rakuten
+      - 生活市集
+      - Amazon
+      - Coupang
+    storeLabel: 特選網購
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 官網宣稱「特選通路最高5%」係含國外/日本消費（2%+3%）；國內特選為1%+3%；台灣樂天以Rakuten收錄
+    tiers:
+      - label: 特選通路加碼
+        bonus: 3
+        limit: 300
+        limitUnit: 元
+        condition: 電子/行動帳單＋永豐/京城帳戶自動扣繳（雙任務），每卡戶每期上限300元（各特選通路合併計算）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 特選-淘寶:「須於信用卡帳單明細有明確顯示交易名稱為Taobao且消費國別非台灣始享回饋」→ 國外
+  - stores:
+      - 淘寶
+    storeLabel: 特選網購（淘寶）
+    region: international
+    rate: 2
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 帳單需顯示Taobao且消費國別非台灣
+    tiers:
+      - label: 特選通路加碼
+        bonus: 3
+        limit: 300
+        limitUnit: 元
+        condition: 電子/行動帳單＋永豐/京城帳戶自動扣繳（雙任務），每卡戶每期上限300元（各特選通路合併計算）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 特選-百貨:「漢神巨蛋、漢神百貨、遠東SOGO、遠東百貨」
+  - stores:
+      - 漢神巨蛋
+      - 漢神百貨
+      - 遠東SOGO
+      - 遠東百貨
+    storeLabel: 特選百貨
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    tiers:
+      - label: 特選通路加碼
+        bonus: 3
+        limit: 300
+        limitUnit: 元
+        condition: 電子/行動帳單＋永豐/京城帳戶自動扣繳（雙任務），每卡戶每期上限300元（各特選通路合併計算）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 特選-全支付:「全支付綁定現金回饋JCB卡之一般消費」
+  # 「全支付於全聯、大全聯、超商交易、繳納各項稅費等非一般消費將不列入回饋計算」
+  - stores:
+      - 全支付
+    storeLabel: 全支付綁定消費
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    excludes:
+      - 全聯
+      - 大全聯
+      - 便利商店
+    note: 限全支付綁定本卡之一般消費；全聯/大全聯/超商/繳稅費交易不列入
+    tiers:
+      - label: 特選通路加碼
+        bonus: 3
+        limit: 300
+        limitUnit: 元
+        condition: 電子/行動帳單＋永豐/京城帳戶自動扣繳（雙任務），每卡戶每期上限300元（各特選通路合併計算）
+        tags:
+          - 電子帳單
+          - 自動扣繳
+  # 官網:「以永豐現金回饋JCB卡代扣繳任一【壽險】及【產險】保險費用，無須登錄，享1%回饋無上限
+  # 不含富邦人壽（含原ING安泰人壽）保費、三商美邦人壽保費」
+  - stores:
+      - 保費
+    region: domestic
+    rate: 1
+    limit: 0
+    limitUnit: 元
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 無須登錄；不含富邦人壽（含原ING安泰）、三商美邦人壽保費；已分期之保費不回饋

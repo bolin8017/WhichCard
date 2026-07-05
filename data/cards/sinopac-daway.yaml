@@ -1,0 +1,91 @@
+id: sinopac-daway
+name: DAWAY卡
+bank: 永豐銀行
+network:
+  - visa
+rewardType: 點數回饋
+pointsName: LINE POINTS
+sourceUrl: https://bank.sinopac.com/sinopacbt/personal/credit-card/introduction/bankcard/DAWAY.html
+updatedAt: "2026-07-05"
+# 官網宣稱「國內最高8%/國外最高10%」= 基礎+LINE Pay加碼1.5%+新戶再加碼6%；新戶活動依政策不收錄
+note: 回饋為LINE POINTS（效期180天），須綁定LINE Pay帳號方能入點；基礎回饋單筆未滿100元不回饋（四捨五入）；分期交易不回饋；官網「最高8%/10%」含新戶加碼6%（未收錄）
+rewards:
+  # 官網表格:「DAWAY卡基礎 國內一般消費 0.5% 無上限」（未標活動期限，視為常態權益）
+  # 排除依永豐信用卡一般消費定義公告推定（適用全卡系）:
+  # https://bank.sinopac.com/sinopacBT/personal/credit-card/news/20260421090303483000000000000890.html
+  # TODO-REVIEW: DAWAY頁未逐字列排除清單，請核對頁面「注意事項」彈窗
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0.5
+    limit: 0
+    limitUnit: 點
+    excludes:
+      - 代繳
+      - 全聯
+      - 大全聯
+      - 便利商店
+      - 悠遊卡自動加值
+      - 一卡通加值
+    note: 依永豐一般消費定義推定排除（另不含繳費平台、超商APP、eTag儲值、代扣基金、稅款學費等）；基礎回饋於商店請款後5個營業日入點
+    tiers:
+      # 官網表格:「DAWAY卡LINE Pay加碼 ①一般消費LINE Pay綁定DAWAY卡交易 ②DAWAY GO等級 1.5% 上限300點/帳單週期」
+      - label: LINE Pay加碼
+        bonus: 1.5
+        limit: 300
+        limitUnit: 點
+        condition: 透過LINE Pay綁定本卡支付＋DAWAY GO等級（永豐/京城帳戶自動扣繳＋電子/行動帳單＋網銀會員完成投資屬性問卷），活動期間2026/7/1~12/31
+        tags:
+          - 行動支付
+          - 自動扣繳
+          - 電子帳單
+  # 官網表格:「DAWAY卡基礎 國外一般消費 2.5% 無上限」
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 2.5
+    limit: 0
+    limitUnit: 點
+    note: 基礎回饋於商店請款後5個營業日入點；分期交易不回饋
+    tiers:
+      - label: LINE Pay加碼
+        bonus: 1.5
+        limit: 300
+        limitUnit: 點
+        condition: 透過LINE Pay綁定本卡支付＋DAWAY GO等級（永豐/京城帳戶自動扣繳＋電子/行動帳單＋網銀會員完成投資屬性問卷），活動期間2026/7/1~12/31；上限與國內合併計算
+        tags:
+          - 行動支付
+          - 自動扣繳
+          - 電子帳單
+  # 官網:「路易莎咖啡加碼 ①LINE Pay綁定DAWAY卡支付 ②路易莎咖啡 5% 每帳號50點/月 總限量30萬點/月」
+  # 活動期間 2026/7/1~12/31（半年主檔）；官網宣稱「最高13%」含新戶6%，老戶疊加最高7.5%
+  - stores:
+      - 路易莎咖啡
+    region: domestic
+    rate: 0.5
+    limit: 0
+    limitUnit: 點
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 官網宣稱最高13%含新戶加碼6%（未收錄）；老戶可疊加LINE Pay加碼1.5%，最高7.5%
+    tiers:
+      - label: 路易莎加碼
+        bonus: 5
+        limit: 50
+        limitUnit: 點
+        condition: 透過LINE Pay綁定本卡於路易莎咖啡支付（每帳號上限50點/月，總限量30萬點/月）
+        tags:
+          - 行動支付
+          - 指定通路
+          - 限期
+      - label: LINE Pay加碼
+        bonus: 1.5
+        limit: 300
+        limitUnit: 點
+        condition: 透過LINE Pay綁定本卡支付＋DAWAY GO等級（自動扣繳＋電子/行動帳單＋網銀會員問卷）
+        tags:
+          - 行動支付
+          - 自動扣繳
+          - 電子帳單

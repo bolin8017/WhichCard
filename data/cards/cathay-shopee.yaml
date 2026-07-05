@@ -1,0 +1,122 @@
+id: cathay-shopee
+name: 蝦皮購物聯名卡
+bank: 國泰世華
+network:
+  - mastercard
+rewardType: 點數回饋
+pointsName: 蝦幣
+sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/product/credit-card/cards/shopee
+updatedAt: "2026-07-05"
+# 官網:「蝦皮購物站內回饋最高10%」= 天天最高4%（國泰最高2%＋蝦皮最高2%）＋指定期間加碼6%
+note: 鈦金卡；蝦幣1點=1元僅限蝦皮購物折抵，效期約3個月；每月一般消費5筆或滿5,000元次月贈蝦皮店到店免運券；本卡消費不累積小樹點
+rewards:
+  # 站內 — 官網詳細說明:「國泰世華提供 含基本回饋0.5%：累積NT$2,999以下1%、NT$3,000以上2%」
+  # 「蝦皮購物提供：非商城1%、商城2%」「指定期間蝦幣加碼最高6%...總回饋率最高達10%」
+  # 「活動期間至2026/12/31止」
+  - stores:
+      - 蝦皮
+    region: domestic
+    rate: 1.5
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 10
+    validUntil: "2026-12-31"
+    note: 保底=國泰基本0.5%＋蝦皮全站1%；LINE Pay/街口/蝦皮跨境與海外交易不適用站內回饋；分期依已入帳金額計算（檔期加碼依分期前總額）
+    tiers:
+      # 官網:「累積消費NT$3,000以上 2%（含基本0.5%）」→ 加碼最高1.5%；「帳單年度回饋上限20,000蝦幣點數」
+      - label: 全站滿額加碼
+        bonus: 1.5
+        limit: 20000
+        limitUnit: 點
+        condition: 當期帳單蝦皮累積消費滿3,000元國泰加碼1.5%（未滿3,000為0.5%），次期帳單回饋，帳單年度上限20,000點
+        tags:
+          - 最低消費
+      # 官網:「蝦皮購物提供 商城2%（非商城1%）」
+      - label: 商城加碼
+        bonus: 1
+        condition: 於蝦皮商城消費，蝦皮提供2%（非商城1%），消費次次月回饋至蝦皮帳戶
+        limit: 0
+        limitUnit: 點
+        tags:
+          - 指定通路
+      # 官網:「超級品牌日：6%（月上限1,000）」「促刷檔期：6%（99/雙10/雙11/雙12，每檔上限2,000）」「擇優回饋，無法疊加」
+      - label: 檔期加碼
+        bonus: 6
+        limit: 2000
+        limitUnit: 點
+        condition: 超級品牌日（每戶月上限1,000蝦幣，蝦皮APP登錄）或促刷檔期99/雙10/雙11/雙12（每檔上限2,000蝦幣，本行網頁登錄），兩活動擇優不疊加
+        tags:
+          - 需登錄
+          - 限期
+  # 站外 — 官網:「站外(非蝦皮購物)一般消費筆筆享0.5%蝦幣回饋」＋「其他共同注意事項」排除全文
+  - stores:
+      - "*"
+    storeLabel: 國內全通路
+    region: domestic
+    rate: 0.5
+    limit: 0
+    limitUnit: 點
+    validUntil: "2026-12-31"
+    excludes:
+      - 便利商店
+      - 全聯
+      - 大全聯
+      - icash加值
+      - 代繳
+    note: 另不含稅款、學費、路邊停車費、繳費平台（醫指付/公務機關/CUBE繳費）、國壽躉繳/投資型/利變年金保費代繳、代扣基金、小額支付平台特店、eTag、境外投資平台（eToro）、匯兌平台（Wise）、虛擬貨幣、博奕；一般保費未列排除
+  # 官網:「海外消費免手續費 可同享蝦幣點數站外消費回饋」
+  - stores:
+      - "*"
+    storeLabel: 海外全通路
+    region: international
+    rate: 0.5
+    limit: 0
+    limitUnit: 點
+    validUntil: "2026-12-31"
+    note: 海外消費免收1.5%國外交易手續費；海外及蝦皮站內跨境交易不適用站內回饋
+  # 活動頁:「登錄成功加碼6.5%蝦幣，加計原權益0.5%蝦幣，最高可達7%」兩波各限量10,000名、每波上限3,000蝦幣
+  - stores:
+      - Uber Eats
+      - foodpanda
+      - 台灣高鐵
+      - 台鐵
+      - 台灣大車隊
+      - LINE GO
+      - Uber
+      - iRent
+      - 長榮航空
+      - 中華航空
+      - 星宇航空
+      - 台灣虎航
+      - 亞洲航空
+      - 國泰航空
+      - 易遊網
+      - 可樂旅遊
+      - 山富旅遊
+      - 雄獅旅遊
+      - 五福旅遊
+      - 鳳凰旅遊
+      - 東南旅遊
+      - KKDAY
+      - Klook
+      - 昇恆昌免稅店
+      - 采盟免稅店
+    storeLabel: 指定外送/交通/旅遊
+    region: domestic
+    rate: 0.5
+    limit: 0
+    limitUnit: 點
+    maxTotalRate: 7
+    sourceUrl: https://www.cathay-cube.com.tw/cathaybk/personal/event/overview/credit-card/online-shopping/202506/sp-travel
+    validFrom: "2026-07-01"
+    validUntil: "2026-12-31"
+    note: 航空限官網/APP/臨櫃購票；高鐵/台鐵限官網/APP/臨櫃/售票機（不含補票）；台灣大車隊限App短程叫車；Uber限國內；旅行社限直營；Uber Eats不含Uber One訂閱
+    tiers:
+      - label: 登錄加碼
+        bonus: 6.5
+        limit: 3000
+        limitUnit: 點
+        condition: 需每波登錄（第一波9/22-9/24、第二波12/22-12/24開放，各限量10,000名），每戶每波回饋上限3,000蝦幣
+        tags:
+          - 需登錄
+          - 限期
