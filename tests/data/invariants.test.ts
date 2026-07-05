@@ -53,14 +53,17 @@ describe('data invariants: reward rules', () => {
 		}
 	});
 
-	it('maxTotalRate 與 rate + 最高 tier bonus 一致（官網宣稱 vs 檔位加總）', () => {
-		// 兩者依定義可能不同（擇優/疊加語意），但目前所有卡片一致；
-		// 若新卡官網宣稱與檔位推導確實不同，將該規則加入豁免清單並附註原因。
-		const exempt = new Set<string>();
+	it('maxTotalRate 落在檔位可解釋區間內（官網宣稱 vs 檔位結構）', () => {
+		// 擇優型卡片：maxTotalRate = rate + 最高 tier bonus；
+		// 疊加型卡片（多任務可同時達成）：maxTotalRate 最多為 rate + 全部 bonus 加總。
+		// 低於前者代表顯示低估、高於後者代表宣稱值無檔位支撐——都是資料輸入錯誤。
 		for (const { rule, label } of eachRule) {
-			if (rule.maxTotalRate === undefined || exempt.has(label)) continue;
-			const maxBonus = rule.tiers?.length ? Math.max(...rule.tiers.map((t) => t.bonus)) : 0;
-			expect(Math.abs(rule.rate + maxBonus - rule.maxTotalRate), label).toBeLessThan(1e-9);
+			if (rule.maxTotalRate === undefined) continue;
+			const bonuses = rule.tiers?.map((t) => t.bonus) ?? [];
+			const maxBonus = bonuses.length ? Math.max(...bonuses) : 0;
+			const sumBonus = bonuses.reduce((a, b) => a + b, 0);
+			expect(rule.maxTotalRate, label).toBeGreaterThanOrEqual(rule.rate + maxBonus - 1e-9);
+			expect(rule.maxTotalRate, label).toBeLessThanOrEqual(rule.rate + sumBonus + 1e-9);
 		}
 	});
 });
