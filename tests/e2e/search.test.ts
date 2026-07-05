@@ -20,9 +20,16 @@ test.describe('Home page', () => {
 		await page.goto('/');
 		await page.getByPlaceholder('輸入商家或通路名稱...').fill('好市多');
 		// Fubon Costco card (the only card accepted at 好市多) should be visible
-		await expect(page.getByText('Costco聯名卡')).toBeVisible();
+		// (exact: the restriction hint also contains the substring 'Costco聯名卡')
+		await expect(page.getByText('Costco聯名卡', { exact: true })).toBeVisible();
 		// DAWHO card should appear only in general section (not specific match)
 		await expect(page.getByText('好市多 指定回饋')).toBeVisible();
+	});
+
+	test('restriction hint explains why only one card appears (好市多)', async ({ page }) => {
+		await page.goto('/');
+		await page.getByPlaceholder('輸入商家或通路名稱...').fill('好市多');
+		await expect(page.getByText('僅接受富邦Costco聯名卡')).toBeVisible();
 	});
 
 	test('region filter changes results', async ({ page }) => {

@@ -245,7 +245,11 @@ function buildOutput(
 ): void {
 	const storeRestrictions: Record<string, StoreRestriction> = {};
 	for (const store of stores) {
-		storeRestrictions[store.name] = store.restrictions;
+		// Entry-level note is the user-facing reason for the restriction;
+		// carry it into the index so the UI can display it
+		storeRestrictions[store.name] = store.note
+			? { ...store.restrictions, note: store.note }
+			: store.restrictions;
 	}
 
 	const searchIndex: SearchIndex = { aliases, storeRestrictions, categories };

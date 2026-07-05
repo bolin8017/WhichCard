@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { searchStore, initSearchEngine } from '$lib/stores/search.svelte';
+	import { describeRestriction } from '$lib/engine/restriction';
 	import { myCardsStore } from '$lib/stores/myCards.svelte';
 	import SearchBar from '$components/SearchBar.svelte';
 	import RegionFilter from '$components/RegionFilter.svelte';
@@ -42,21 +43,7 @@
 
 	const results = $derived(searchStore.results);
 
-	const restrictionHint = $derived.by(() => {
-		const r = results.restriction;
-		if (!r) return undefined;
-		if (r.networks?.length) {
-			const names = r.networks.map((n) =>
-				n === 'mastercard' ? 'Mastercard'
-				: n === 'visa' ? 'Visa'
-				: n === 'jcb' ? 'JCB'
-				: n === 'amex' ? 'AMEX'
-				: n
-			);
-			return `此通路僅接受 ${names.join(' / ')}`;
-		}
-		return undefined;
-	});
+	const restrictionHint = $derived(describeRestriction(results.restriction));
 </script>
 
 <!-- Permanent header: SearchBar never unmounts -->
